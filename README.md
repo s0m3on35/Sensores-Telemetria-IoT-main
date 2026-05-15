@@ -2,8 +2,6 @@
 
 Repositorio educativo con una visualizacion interactiva del Curso 3 sobre sensorizacion territorial, telemetria generica, tecnologias LPWAN y preparacion del dato IoT para capas posteriores.
 
-El objetivo es transformar el material de clase y las practicas en una referencia clara, navegable y util para estudiar, justificar arquitecturas y preparar entregables.
-
 ---
 
 ## Contenido
