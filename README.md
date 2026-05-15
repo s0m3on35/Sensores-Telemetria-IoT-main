@@ -66,17 +66,6 @@ Este repositorio no es solo una presentacion. Esta pensado como herramienta de t
 
 ---
 
-## Como usarlo
-
-No requiere instalacion ni dependencias.
-
-1. Clonar o descargar el repositorio.
-2. Abrir `docs/index.html` en el navegador.
-
-Opcionalmente, puede desplegarse con GitHub Pages apuntando a la carpeta `docs`.
-
----
-
 ## Practicas incluidas
 
 ### Diseno de infraestructura IoT
