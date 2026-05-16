@@ -2,6 +2,8 @@
 
 Repositorio educativo con una visualizacion interactiva del Curso 3 sobre sensorizacion territorial, telemetria generica, tecnologias LPWAN y preparacion del dato IoT para capas posteriores.
 
+
+
 ---
 
 ## Contenido
@@ -61,6 +63,17 @@ Este repositorio no es solo una presentacion. Esta pensado como herramienta de t
         ├── caso-2.png
         └── caso-3.png
 ```
+
+---
+
+## Como usarlo
+
+No requiere instalacion ni dependencias.
+
+1. Clonar o descargar el repositorio.
+2. Abrir `docs/index.html` en el navegador.
+
+Opcionalmente, puede desplegarse con GitHub Pages apuntando a la carpeta `docs`.
 
 ---
 
