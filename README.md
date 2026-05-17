@@ -2,7 +2,7 @@
 
 Repositorio educativo con una visualizacion interactiva del Curso 3 sobre sensorizacion territorial, telemetria generica, tecnologias LPWAN y preparacion del dato IoT para capas posteriores.
 
-
+El objetivo es transformar el material de clase y las practicas en una referencia clara, navegable y util para estudiar, justificar arquitecturas y preparar entregables.
 
 ---
 
@@ -21,9 +21,14 @@ El proyecto cubre los siguientes bloques:
 - Presupuesto energetico, modos sleep, radio TX y MTBF de nodos a bateria.
 - Gemelo digital territorial: por que la fidelidad del modelo depende de la supervivencia de la capa fisica.
 - Arquitecturas de gateways, servidores de red, payload formatters e integraciones.
+- Fog/edge computing aplicado a IoT territorial y seguridad hardware de dispositivos de borde.
 - Orquestacion de flotas: LwM2M frente a MQTT, OTA y coste de sesiones.
 - Seguridad en capa fisica, operacion de campo y eficiencia energetica.
 - Pentesting defensivo y securizacion de LoRaWAN, NB-IoT/LTE-M, gateways, payloads, backend y firmware.
+- Enfoque red side / blue side: validacion autorizada, deteccion, respuesta, indicadores y operacion SOC/NOC.
+- Auditoria de firmware IoT: analisis estatico, dinamico, hibrido, emulacion, fuzzing y ciclo de vida OTA.
+- Inyeccion de codigo en IoT inalambrico: validacion de frames, parsers, firmware malicioso e impacto operativo.
+- Threat modeling para IoT movil/logistica digital: tracking, condicion, fraude, comunicacion y fallos no maliciosos.
 - Practica TTN: del payload hexadecimal/binario al JSON tecnico.
 - Falacia del texto en LPWAN: serializacion binaria frente a JSON completo en dispositivos de bateria.
 - Ingenieria de payload: canal, tipo, valor escalado, bit-packing y documentacion de decoders.
@@ -42,8 +47,9 @@ Este repositorio no es solo una presentacion. Esta pensado como herramienta de t
 - Elegir conectividad segun distancia, cobertura, energia disponible, mantenimiento y criticidad.
 - Separar la capa de medida, la capa de comunicacion y la capa de recoleccion.
 - Relacionar MTBF, presupuesto energetico, diagnostico remoto y gemelo digital.
+- Entender por que un gateway fog necesita seguridad hardware, custodia de claves y arranque confiable.
 - Justificar por que algunas tecnologias se descartan en cada caso.
-- Auditar riesgos IoT con alcance autorizado, evidencias tecnicas y plan de hardening.
+- Auditar riesgos IoT con alcance autorizado, evidencias tecnicas, blue team monitoring y plan de hardening.
 - Preparar salidas tecnicas como payload decodificado, JSON normalizado o eventos listos para plataforma.
 
 ---
