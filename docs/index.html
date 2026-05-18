@@ -1,0 +1,2478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sensores, Telemetria e IoT Territorial</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="hero" id="top">
+      <div class="eyebrow">Curso 3 · Ingenieria territorial IoT</div>
+      <div class="hero-grid">
+        <div>
+          <h1>Sensores, telemetria generica y recoleccion territorial IoT</h1>
+          <p class="lead">
+            Mapa interactivo para estudiar sensorizacion territorial, redes LPWAN, ciclo de vida del hardware, gateways, servidores de red, seguridad fisica, pentesting defensivo, eficiencia energetica y la practica TTN donde un payload compacto se convierte en JSON tecnico.
+          </p>
+          <div class="hero-actions">
+            <button class="btn primary" data-scroll="#mapa">Ver mapa del curso</button>
+            <button class="btn" data-scroll="#casos">Abrir casos practicos</button>
+            <button class="btn" data-scroll="#ttn">Ver practica TTN</button>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="mini-stat">
+            <div class="label">Idea clave</div>
+            <div class="value">Medir · transmitir · decodificar</div>
+            <div class="desc">El dato territorial tiene valor cuando llega disponible, trazable, validado y preparado para la siguiente capa.</div>
+          </div>
+          <div class="mini-stat">
+            <div class="label">Tecnologias</div>
+            <div class="value">LoRaWAN · NB-IoT · hibridas</div>
+            <div class="desc">La decision depende de distancia, cobertura, energia, coste, criticidad y mantenimiento.</div>
+          </div>
+          <div class="mini-stat">
+            <div class="label">Practicas</div>
+            <div class="value">3 casos + TTN</div>
+            <div class="desc">Arquitectura de campo y decodificacion de payload Dragino LHT65/LHT65N.</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Navegacion</h2>
+        <div class="search-wrap">
+          <input id="moduleSearch" class="search" type="text" placeholder="Filtrar modulos o conceptos" />
+        </div>
+
+        <div class="nav-list" id="navList">
+          <button class="nav-btn active" data-scroll="#intro" data-tags="introduccion sensorica territorial dato telemetria">
+            <div class="nav-topline">Introduccion</div>
+            <div class="nav-title">Del sensor al dato usable</div>
+            <div class="nav-meta">medida · payload · recoleccion</div>
+          </button>
+          <button class="nav-btn" data-scroll="#taxonomia" data-tags="taxonomia sensores ambientales trafico agua edificios energia">
+            <div class="nav-topline">Taxonomia</div>
+            <div class="nav-title">Sensores territoriales</div>
+            <div class="nav-meta">ambiental · trafico · agua · energia</div>
+          </button>
+          <button class="nav-btn" data-scroll="#conectividad" data-tags="lorawan nb-iot lte-m wifi ethernet rs485 conectividad lpwan">
+            <div class="nav-topline">Conectividad</div>
+            <div class="nav-title">LPWAN y redes hibridas</div>
+            <div class="nav-meta">LoRaWAN · NB-IoT · LTE-M</div>
+          </button>
+          <button class="nav-btn" data-scroll="#lorawan-clases" data-tags="lorawan clase a clase b clase c aloha beacon continuous bateria latencia downlink">
+            <div class="nav-topline">LoRaWAN</div>
+            <div class="nav-title">Clases A, B y C</div>
+            <div class="nav-meta">bateria · latencia · actuadores</div>
+          </button>
+          <button class="nav-btn" data-scroll="#celular-lpwan" data-tags="nb-iot lte-m 3gpp sim esim operador psm edrx espectro licenciado">
+            <div class="nav-topline">Celular LPWAN</div>
+            <div class="nav-title">NB-IoT / LTE-M</div>
+            <div class="nav-meta">SIM · PSM · eDRX</div>
+          </button>
+          <button class="nav-btn" data-scroll="#locales" data-tags="wifi zigbee z-wave mesh malla estrella star topologia territorio">
+            <div class="nav-topline">Comparativa</div>
+            <div class="nav-title">WiFi, Zigbee, Z-Wave y topologias</div>
+            <div class="nav-meta">malla · estrella · limites territoriales</div>
+          </button>
+          <button class="nav-btn" data-scroll="#hardware" data-tags="hardware calibracion mantenimiento alimentacion bateria solar ciclo vida">
+            <div class="nav-topline">Hardware</div>
+            <div class="nav-title">Ciclo de vida y calibracion</div>
+            <div class="nav-meta">instalacion · deriva · mantenimiento</div>
+          </button>
+          <button class="nav-btn" data-scroll="#energia-mtbf" data-tags="energia bateria mtbf sleep radio tx lpbam consumo autonomia duty cycle">
+            <div class="nav-topline">Energia</div>
+            <div class="nav-title">Bateria, sleep y MTBF</div>
+            <div class="nav-meta">medir poco · dormir mucho</div>
+          </button>
+          <button class="nav-btn" data-scroll="#tacticas-transmision" data-tags="tacticas transmision silencio estrategia firmware umbral threshold evento critico deep sleep ack">
+            <div class="nav-topline">Firmware</div>
+            <div class="nav-title">Silencio como estrategia</div>
+            <div class="nav-meta">umbral - evento - deep sleep</div>
+          </button>
+          <button class="nav-btn" data-scroll="#gemelo-digital" data-tags="gemelo digital mtbf capa fisica supervivencia mqtt lwm2m payload friccion ceguera flota">
+            <div class="nav-topline">Gemelo digital</div>
+            <div class="nav-title">Supervivencia en capa fisica</div>
+            <div class="nav-meta">MTBF - energia - diagnostico</div>
+          </button>
+          <button class="nav-btn" data-scroll="#arquitectura" data-tags="gateway servidor red backend payload formatter integracion json">
+            <div class="nav-topline">Arquitectura</div>
+            <div class="nav-title">Gateways y servidores de red</div>
+            <div class="nav-meta">radio · backend · integraciones</div>
+          </button>
+          <button class="nav-btn" data-scroll="#fog-edge" data-tags="fog edge cloud hardware security hsm puf trm soc tamper gateway seguridad borde">
+            <div class="nav-topline">Edge/Fog</div>
+            <div class="nav-title">Seguridad hardware en borde</div>
+            <div class="nav-meta">HSM - PUF - tamper</div>
+          </button>
+          <button class="nav-btn" data-scroll="#orquestacion" data-tags="lwm2m mqtt coap udp tcp tls ota firmware flotas nodos orquestacion">
+            <div class="nav-topline">Flotas</div>
+            <div class="nav-title">LwM2M vs MQTT</div>
+            <div class="nav-meta">OTA · sesiones · consumo</div>
+          </button>
+          <button class="nav-btn" data-scroll="#seguridad" data-tags="seguridad fisica eficiencia energetica tamper energia">
+            <div class="nav-topline">Operacion</div>
+            <div class="nav-title">Seguridad fisica y energia</div>
+            <div class="nav-meta">proteccion · autonomia · campo</div>
+          </button>
+          <button class="nav-btn" data-scroll="#logistica-iot" data-tags="logistica digital tracking activos moviles amenaza comunicacion jamming replay mitm spoofing humedad golpe cadena suministro">
+            <div class="nav-topline">Logistica</div>
+            <div class="nav-title">IoT movil y threat model</div>
+            <div class="nav-meta">tracking - condicion - fraude</div>
+          </button>
+          <button class="nav-btn" data-scroll="#pentesting" data-tags="pentesting auditoria hardening securizacion lorawan nb-iot lte-m gateway ttn chirpstack claves firmware payload">
+            <div class="nav-topline">Pentesting</div>
+            <div class="nav-title">Auditoria y securizacion IoT</div>
+            <div class="nav-meta">alcance - evidencias - hardening</div>
+          </button>
+          <button class="nav-btn" data-scroll="#arquitectura-segura" data-tags="arquitectura segura referencia plano datos gestion seguridad observabilidad siem noc soc gateway backend">
+            <div class="nav-topline">Arquitectura segura</div>
+            <div class="nav-title">Referencia end-to-end</div>
+            <div class="nav-meta">datos - gestion - seguridad</div>
+          </button>
+          <button class="nav-btn" data-scroll="#errores-diseno" data-tags="errores diseno antipatterns json confirmed uplink gateway unico cobertura bateria claves decoder">
+            <div class="nav-topline">Errores tipicos</div>
+            <div class="nav-title">Fallos de diseno IoT</div>
+            <div class="nav-meta">campo - energia - seguridad</div>
+          </button>
+          <button class="nav-btn" data-scroll="#mapa" data-tags="modulos curso resumen aprendizaje">
+            <div class="nav-topline">Mapa</div>
+            <div class="nav-title">Resumen de modulos</div>
+            <div class="nav-meta">bloques de aprendizaje</div>
+          </button>
+          <button class="nav-btn" data-scroll="#casos" data-tags="casos practica rural remoto edificios municipal orografia">
+            <div class="nav-topline">Practica</div>
+            <div class="nav-title">Casos de decision IoT</div>
+            <div class="nav-meta">rural · remoto · interiores</div>
+          </button>
+          <button class="nav-btn" data-scroll="#spec-rio" data-tags="spec nivel rio mino radar 80 ghz 4-20 ma solar lorawan privado clase a alerta critica">
+            <div class="nav-topline">Spec 01</div>
+            <div class="nav-title">Nivel de rio</div>
+            <div class="nav-meta">radar · 4-20 mA · LoRaWAN</div>
+          </button>
+          <button class="nav-btn" data-scroll="#specs-territoriales" data-tags="spec smart parking urbano vinedo rias baixas magnetometro radar sdi-12 humedad suelo lorawan nb-iot">
+            <div class="nav-topline">Specs 02-03</div>
+            <div class="nav-title">Parking y vinedo</div>
+            <div class="nav-meta">evento · SDI-12 · agricultura</div>
+          </button>
+          <button class="nav-btn" data-scroll="#ttn" data-tags="ttn things network payload decoder json dragino lht65">
+            <div class="nav-topline">TTN</div>
+            <div class="nav-title">De bytes a JSON</div>
+            <div class="nav-meta">payload · decoder · live data</div>
+          </button>
+          <button class="nav-btn" data-scroll="#serializacion" data-tags="json binario payload serializacion bytes decoder time on air lora lpwan">
+            <div class="nav-topline">Payload</div>
+            <div class="nav-title">Falacia del texto en LPWAN</div>
+            <div class="nav-meta">time-on-air · bateria · decoder</div>
+          </button>
+          <button class="nav-btn" data-scroll="#decision" data-tags="decision tecnologias descartadas matriz criterios">
+            <div class="nav-topline">Decision</div>
+            <div class="nav-title">Como justificar una arquitectura</div>
+            <div class="nav-meta">criterios · descartes · salida</div>
+          </button>
+          <button class="nav-btn" data-scroll="#matriz-conectividad" data-tags="master connectivity matrix matriz wifi zigbee lorawan nb-iot sigfox cobertura ancho banda autonomia soberania">
+            <div class="nav-topline">Matriz</div>
+            <div class="nav-title">Master Connectivity Matrix</div>
+            <div class="nav-meta">cobertura · bateria · soberania</div>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="panel section accent-top" id="intro" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Introduccion</div>
+              <h2 class="section-title">Del sensor al dato territorial util</h2>
+              <p class="section-subtitle">
+                Una infraestructura IoT territorial no termina cuando el sensor mide. La cadena completa incluye variable fisica, transductor, nodo, energia, enlace, gateway u operador, servidor de red, decodificacion, validacion y entrega a plataforma.
+              </p>
+            </div>
+            <div class="chips">
+              <span class="chip">Telemetria</span>
+              <span class="chip">Payload</span>
+              <span class="chip">JSON tecnico</span>
+            </div>
+          </div>
+
+          <div class="flow">
+            <div class="flow-step">Variable fisica</div>
+            <div class="flow-step">Sensor / nodo</div>
+            <div class="flow-step">Red de comunicacion</div>
+            <div class="flow-step">Servidor de red</div>
+            <div class="flow-step">Decoder</div>
+            <div class="flow-step">Dato explotable</div>
+          </div>
+
+          <div class="grid-2 mt-18">
+            <article class="card">
+              <h3>Idea central</h3>
+              <p>El sensor normalmente no envia un documento rico y autoexplicativo. En muchos sistemas envia bytes compactos para ahorrar energia y ancho de banda. La capa de recoleccion transforma esos bytes en campos comprensibles.</p>
+            </article>
+            <article class="card">
+              <h3>Preguntas guia</h3>
+              <ul>
+                <li>Que variable se mide y con que precision se necesita.</li>
+                <li>Con que frecuencia se envia y cuanta energia consume.</li>
+                <li>Que infraestructura intermedia hace falta para llegar a plataforma.</li>
+                <li>Que formato final deja el dato preparado para analitica, alertas o historico.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="taxonomia" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Taxonomia</div>
+              <h2 class="section-title">Sensores territoriales por dominio</h2>
+              <p class="section-subtitle">La tecnologia de comunicacion se elige mejor cuando antes se entiende el tipo de variable, el entorno fisico y el patron de dato.</p>
+            </div>
+          </div>
+
+          <div class="grid-4">
+            <article class="card">
+              <h3>Ambientales</h3>
+              <p>Temperatura, humedad, CO2, particulas, ruido, lluvia, viento, radiacion solar y calidad del aire.</p>
+            </article>
+            <article class="card">
+              <h3>Trafico y movilidad</h3>
+              <p>Ocupacion de aparcamientos, conteo de vehiculos, velocidad, bicicletas, peatones y eventos de acceso.</p>
+            </article>
+            <article class="card">
+              <h3>Agua e hidrologia</h3>
+              <p>Nivel en cauces, caudal, presion, deposito, bombeo, turbidez, conductividad y fugas.</p>
+            </article>
+            <article class="card">
+              <h3>Edificios y energia</h3>
+              <p>Confort interior, climatizacion, iluminacion, consumo electrico, contadores, ocupacion y accesos.</p>
+            </article>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Lectura practica:</strong> si el dato es pequeno, periodico y tolera latencia, LPWAN suele encajar. Si hay datos densos, baja latencia, video o control exigente, hacen falta otras redes o una arquitectura hibrida.
+          </div>
+        </section>
+
+        <section class="panel section" id="conectividad" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Conectividad</div>
+              <h2 class="section-title">LPWAN, redes celulares y opciones locales</h2>
+              <p class="section-subtitle">No hay una tecnologia ganadora para todos los casos. La buena arquitectura nace de cruzar cobertura, distancia, energia, volumen de datos, coste y operacion.</p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <article class="compare-card">
+              <h3>LoRaWAN</h3>
+              <p><strong>Encaja en:</strong> muchos nodos, bajo consumo, mensajes pequenos y cobertura local mediante gateways.</p>
+              <p><strong>Vigilar:</strong> ubicacion de gateway, duty cycle, penetracion indoor, calidad radio y mantenimiento.</p>
+            </article>
+            <article class="compare-card">
+              <h3>NB-IoT / LTE-M</h3>
+              <p><strong>Encaja en:</strong> activos dispersos, pocos dispositivos, dependencia de operador y cobertura celular disponible.</p>
+              <p><strong>Vigilar:</strong> cuota SIM, cobertura real, autonomia, roaming, latencia y dependencia contractual.</p>
+            </article>
+            <article class="compare-card">
+              <h3>WiFi / Ethernet</h3>
+              <p><strong>Encaja en:</strong> edificios con red local, alimentacion estable y mantenimiento accesible.</p>
+              <p><strong>Vigilar:</strong> segmentacion, credenciales, cambios de red, interferencias y soporte IT.</p>
+            </article>
+            <article class="compare-card">
+              <h3>RS-485 / Modbus</h3>
+              <p><strong>Encaja en:</strong> cuadros, salas tecnicas, contadores y entornos industriales con cableado.</p>
+              <p><strong>Vigilar:</strong> tendido fisico, distancias, conversores, direccionamiento y aislamiento electrico.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="lorawan-clases" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">LoRaWAN</div>
+              <h2 class="section-title">Clases de dispositivo: consumo frente a latencia</h2>
+              <p class="section-subtitle">LoRaWAN trabaja en espectro no licenciado y usa modulacion CSS, con alta robustez frente a ruido. La clase del dispositivo define el equilibrio entre autonomia, ventanas de recepcion y capacidad de recibir ordenes desde la red.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">CSS</span>
+              <span class="chip">ALOHA</span>
+              <span class="chip">Downlink</span>
+            </div>
+          </div>
+
+          <div class="lorawan-class-stack">
+            <article class="lorawan-class-card">
+              <div class="class-badge">A</div>
+              <div>
+                <h3>Clase A · All devices</h3>
+                <p>Consumo minimo. El nodo transmite y solo abre ventanas cortas de recepcion justo despues del uplink. Es el modo base de LoRaWAN y el mas adecuado para la mayoria de sensorica con bateria.</p>
+                <ul>
+                  <li><strong>Encaja en:</strong> temperatura, humedad, nivel, ocupacion, bateria y eventos periodicos.</li>
+                  <li><strong>Ventaja:</strong> maxima autonomia.</li>
+                  <li><strong>Limitacion:</strong> el downlink queda condicionado a que el dispositivo transmita primero.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="lorawan-class-card">
+              <div class="class-badge">B</div>
+              <div>
+                <h3>Clase B · Beacon</h3>
+                <p>Incluye ventanas de recepcion programadas y sincronas con balizas del gateway. Permite una latencia mas predecible a cambio de un consumo superior.</p>
+                <ul>
+                  <li><strong>Encaja en:</strong> casos donde se necesita cierta planificacion de recepcion sin pasar a escucha continua.</li>
+                  <li><strong>Ventaja:</strong> latencia mas controlada que Clase A.</li>
+                  <li><strong>Limitacion:</strong> sacrifica bateria y requiere sincronizacion mediante beacons.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="lorawan-class-card">
+              <div class="class-badge">C</div>
+              <div>
+                <h3>Clase C · Continuous</h3>
+                <p>El receptor permanece casi siempre abierto. Permite escucha continua y downlink con latencia muy baja, pero no es razonable para dispositivos pequenos alimentados solo con bateria.</p>
+                <ul>
+                  <li><strong>Encaja en:</strong> actuadores, farolas, cuadros o equipos conectados a red electrica.</li>
+                  <li><strong>Ventaja:</strong> respuesta rapida desde la plataforma hacia el dispositivo.</li>
+                  <li><strong>Limitacion:</strong> consumo elevado por recepcion continua.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Regla de campo:</strong> para sensorica territorial a bateria, Clase A suele ser la decision natural. Clase C se reserva para equipos alimentados donde el control remoto o la baja latencia sean mas importantes que el consumo.
+          </div>
+        </section>
+
+        <section class="panel section" id="celular-lpwan" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">NB-IoT / LTE-M</div>
+              <h2 class="section-title">Espectro licenciado: la infraestructura la aporta la operadora</h2>
+              <p class="section-subtitle">NB-IoT y LTE-M forman parte del ecosistema 3GPP. Son opciones muy utiles para activos dispersos porque no obligan a desplegar gateways propios, pero trasladan parte de la soberania tecnica y operativa al operador celular.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">3GPP</span>
+              <span class="chip">SIM/eSIM</span>
+              <span class="chip">Operador</span>
+            </div>
+          </div>
+
+          <div class="cellular-grid">
+            <article class="cellular-panel">
+              <h3>Arquitectura</h3>
+              <ul>
+                <li>Alta penetracion estructural, especialmente util en interiores, casetas tecnicas y activos aislados.</li>
+                <li>Sin gateways propios: la cobertura y la estacion base pertenecen al operador celular.</li>
+                <li>Requiere SIM, eSIM o iSIM, con gestion de altas, bajas, cuotas, roaming y ciclo de vida contractual.</li>
+                <li>La soberania de red se delega: se gana simplicidad de despliegue, pero se depende de cobertura, tarifas y continuidad del servicio.</li>
+              </ul>
+            </article>
+
+            <article class="cellular-panel">
+              <h3>Mecanismos de ahorro</h3>
+              <div class="saving-mode">
+                <div class="saving-badge">PSM</div>
+                <p><strong>Power Saving Mode:</strong> la radio queda fisicamente apagada, pero el dispositivo permanece logicamente registrado en la torre. Reduce handshakes al despertar y puede bajar a consumos del orden de microamperios.</p>
+              </div>
+              <div class="saving-mode">
+                <div class="saving-badge">eDRX</div>
+                <p><strong>Extended Discontinuous Reception:</strong> amplia los ciclos de paginacion para recibir comandos desde la nube con latencia controlada, alternando periodos de sleep y recepcion.</p>
+              </div>
+            </article>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Cuando encaja</h3>
+              <p>Pocos activos dispersos, puntos remotos, orografia compleja o ubicaciones donde desplegar y mantener gateways propios no compensa.</p>
+            </article>
+            <article class="card">
+              <h3>Que comprobar</h3>
+              <p>Cobertura real en campo, operador disponible, consumo con SIM fisica/eSIM, calidad de antena, latencia aceptable y coste recurrente.</p>
+            </article>
+            <article class="card">
+              <h3>Riesgo principal</h3>
+              <p>Confundir simplicidad de despliegue con control total. La red funciona porque existe una infraestructura de operador que no gestionamos directamente.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="locales" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Comparativa de redes locales</div>
+              <h2 class="section-title">Cuando WiFi, Zigbee o Z-Wave no escalan al territorio</h2>
+              <p class="section-subtitle">Estas tecnologias son muy utiles en edificios, hogares o redes alimentadas. El problema aparece cuando se intenta trasladarlas sin matices a parcelas, cauces, aldeas dispersas o kilometros de sensorica territorial.</p>
+            </div>
+          </div>
+
+          <div class="local-tech-grid">
+            <article class="local-tech-card">
+              <div class="tech-icon">WiFi</div>
+              <h3>WiFi</h3>
+              <p><strong>Contexto:</strong> excelente ancho de banda para camaras, equipos alimentados y edificios con infraestructura local.</p>
+              <p><strong>Falla en territorio:</strong> consumo energetico alto, dependencia de routers locales, cobertura limitada y frecuente dependencia de nubes propietarias.</p>
+              <p><strong>Uso razonable:</strong> interiores municipales, gateways, camaras o equipos con red electrica.</p>
+            </article>
+
+            <article class="local-tech-card">
+              <div class="tech-icon">Mesh</div>
+              <h3>Zigbee</h3>
+              <p><strong>Contexto:</strong> red mallada de bajo consumo para automatizacion de edificios y sensores cercanos.</p>
+              <p><strong>Falla en territorio:</strong> necesita nodos intermedios repetidores, que tambien requieren energia. El alcance real queda limitado por salto.</p>
+              <p><strong>Uso razonable:</strong> edificios, aulas, salas tecnicas o entornos donde varios nodos esten proximos.</p>
+            </article>
+
+            <article class="local-tech-card">
+              <div class="tech-icon">Sub-GHz</div>
+              <h3>Z-Wave</h3>
+              <p><strong>Contexto:</strong> ecosistema domestico cerrado, robusto en seguridad residencial sub-GHz.</p>
+              <p><strong>Falla en territorio:</strong> enfoque comercial/domestico. No escala bien a cuencas hidrograficas, kilometros de vinedos o activos municipales dispersos.</p>
+              <p><strong>Uso razonable:</strong> domotica y seguridad residencial, no como red territorial general.</p>
+            </article>
+          </div>
+
+          <div class="topology-grid mt-18">
+            <article class="topology-card">
+              <h3>Topologia en malla / mesh</h3>
+              <p>El dato salta de nodo en nodo y puede superar algunos obstaculos geograficos si hay densidad suficiente de equipos.</p>
+              <div class="diagram-box topology-visual" aria-hidden="true">
+                <svg class="mesh-map" viewBox="0 0 620 300" role="img">
+                  <defs>
+                    <marker id="meshArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                      <path d="M0,0 L10,5 L0,10 Z" />
+                    </marker>
+                  </defs>
+                  <g class="map-grid">
+                    <path d="M30 42H590 M30 84H590 M30 126H590 M30 168H590 M30 210H590 M30 252H590" />
+                    <path d="M70 24V276 M126 24V276 M182 24V276 M238 24V276 M294 24V276 M350 24V276 M406 24V276 M462 24V276 M518 24V276 M574 24V276" />
+                  </g>
+                  <g class="mesh-links">
+                    <path d="M82 126L178 78L252 140L330 72L430 118L530 152" />
+                    <path d="M82 126L160 210L252 140L360 224L430 118" />
+                    <path d="M178 78L330 72L360 224L252 140" />
+                    <path d="M160 210L360 224L530 152" />
+                    <path d="M252 140L430 118" />
+                  </g>
+                  <path class="mesh-route" d="M82 126L252 140L430 118L530 152" marker-end="url(#meshArrow)" />
+                  <g class="radio-rings">
+                    <circle cx="252" cy="140" r="36" />
+                    <circle cx="252" cy="140" r="52" />
+                    <circle cx="430" cy="118" r="34" />
+                    <circle cx="430" cy="118" r="50" />
+                    <circle cx="360" cy="224" r="34" />
+                    <circle cx="360" cy="224" r="50" />
+                  </g>
+                  <g class="mesh-node end">
+                    <circle cx="82" cy="126" r="15" /><text x="82" y="156">N01</text>
+                    <circle cx="178" cy="78" r="15" /><text x="178" y="55">N02</text>
+                    <circle cx="160" cy="210" r="15" /><text x="160" y="242">N03</text>
+                    <circle cx="330" cy="72" r="15" /><text x="330" y="49">N04</text>
+                  </g>
+                  <g class="mesh-node router">
+                    <circle cx="252" cy="140" r="18" /><text x="252" y="177">R01</text>
+                    <circle cx="430" cy="118" r="18" /><text x="430" y="93">R02</text>
+                    <circle cx="360" cy="224" r="18" /><text x="360" y="257">R03</text>
+                  </g>
+                  <g class="mesh-gateway">
+                    <circle cx="530" cy="152" r="22" />
+                    <text x="530" y="190">Gateway</text>
+                  </g>
+                  <g class="mesh-callout">
+                    <text x="58" y="36">DATA PACKET</text>
+                    <text x="230" y="32">ROUTERS EN ESCUCHA</text>
+                    <text x="418" y="254">carga radio + bateria</text>
+                  </g>
+                </svg>
+              </div>
+              <ul>
+                <li><strong>Ventaja:</strong> puede rodear obstaculos y ampliar cobertura por repeticion.</li>
+                <li><strong>Coste:</strong> los nodos repetidores no pueden dormir permanentemente.</li>
+                <li><strong>Riesgo territorial:</strong> consumo severo y dependencia de una densidad de nodos que no siempre existe en campo.</li>
+              </ul>
+              <div class="topology-insight">
+                <strong>Peaje energetico:</strong> un nodo router mantiene escucha activa para canalizar trafico ajeno. Eso acelera el drenaje de bateria, aumenta carga termica y complica el mantenimiento.
+              </div>
+            </article>
+
+            <article class="topology-card">
+              <h3>Topologia estrella / star</h3>
+              <p>Cada nodo transmite directamente a una estacion base, gateway u operador. El nodo puede enviar y volver a dormir inmediatamente.</p>
+              <div class="diagram-box topology-visual" aria-hidden="true">
+                <svg class="star-map" viewBox="0 0 620 300" role="img">
+                  <defs>
+                    <marker id="starArrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                      <path d="M0,0 L10,5 L0,10 Z" />
+                    </marker>
+                  </defs>
+                  <g class="map-grid">
+                    <path d="M30 42H590 M30 84H590 M30 126H590 M30 168H590 M30 210H590 M30 252H590" />
+                    <path d="M70 24V276 M126 24V276 M182 24V276 M238 24V276 M294 24V276 M350 24V276 M406 24V276 M462 24V276 M518 24V276 M574 24V276" />
+                  </g>
+                  <g class="star-sleep-links">
+                    <path d="M310 152L116 70" />
+                    <path d="M310 152L502 78" />
+                    <path d="M310 152L108 224" />
+                    <path d="M310 152L498 224" />
+                    <path d="M310 152L310 54" />
+                    <path d="M310 152L310 250" />
+                  </g>
+                  <path class="star-active-link" d="M458 94L310 152" marker-end="url(#starArrow)" />
+                  <g class="star-hub">
+                    <circle cx="310" cy="152" r="30" />
+                    <path d="M310 120V80 M292 86Q310 62 328 86 M282 98Q310 52 338 98" />
+                    <text x="310" y="203">Estacion base</text>
+                  </g>
+                  <g class="star-node sleep">
+                    <circle cx="116" cy="70" r="16" /><text x="116" y="102">sleep</text>
+                    <circle cx="502" cy="78" r="16" /><text x="502" y="110">sleep</text>
+                    <circle cx="108" cy="224" r="16" /><text x="108" y="256">sleep</text>
+                    <circle cx="498" cy="224" r="16" /><text x="498" y="256">sleep</text>
+                    <circle cx="310" cy="54" r="16" /><text x="310" y="33">sleep</text>
+                    <circle cx="310" cy="250" r="16" /><text x="310" y="280">sleep</text>
+                  </g>
+                  <g class="star-node active">
+                    <circle cx="458" cy="94" r="20" />
+                    <path d="M447 88H469 M447 100H463" />
+                    <text x="458" y="63">TX activa</text>
+                  </g>
+                  <g class="star-callout">
+                    <text x="42" y="36">nodos dormidos</text>
+                    <text x="392" y="38">envio directo</text>
+                    <text x="358" y="274">riesgo: hub unico</text>
+                  </g>
+                </svg>
+              </div>
+              <ul>
+                <li><strong>Ventaja:</strong> eficiencia energetica extrema en nodos de baja frecuencia.</li>
+                <li><strong>Coste:</strong> depende de la cobertura de gateway, estacion base u operador.</li>
+                <li><strong>Riesgo territorial:</strong> el gateway central o la cobertura celular pueden convertirse en punto unico de fallo.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Paradigma deep sleep:</strong> en topologia estrella el nodo ignora a sus vecinos, dispara su carga util hacia una estacion base o celda satelital y vuelve al letargo. Es ideal para autonomia extrema, siempre que el hub, gateway u operador no sea un punto unico de fallo sin redundancia.
+          </div>
+
+          <div class="note mt-18">
+            <strong>Lectura para decidir:</strong> en territorio abierto se suele preferir estrella con LoRaWAN o NB-IoT/LTE-M cuando los nodos deben dormir mucho tiempo. La malla encaja mejor donde hay nodos cercanos, energia disponible y mantenimiento accesible; si los routers dependen de bateria, la resiliencia aparente puede convertirse en fragilidad operativa.
+          </div>
+        </section>
+
+        <section class="panel section" id="hardware" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Hardware</div>
+              <h2 class="section-title">Ciclo de vida y calibracion de sensores</h2>
+              <p class="section-subtitle">Un despliegue territorial falla muchas veces por detalles de campo: alimentacion, envolvente, condensacion, anclaje, suciedad, deriva del sensor o falta de plan de mantenimiento.</p>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <article class="timeline-item">
+              <h3>1. Seleccion</h3>
+              <ul>
+                <li>Rango de medida, precision y resolucion.</li>
+                <li>Entorno: intemperie, interior, vibracion, humedad o polvo.</li>
+                <li>Compatibilidad con nodo, bus y alimentacion.</li>
+              </ul>
+            </article>
+            <article class="timeline-item">
+              <h3>2. Instalacion</h3>
+              <ul>
+                <li>Ubicacion representativa y accesible.</li>
+                <li>Antena, altura, orientacion y caja.</li>
+                <li>Proteccion frente a manipulacion o vandalismo.</li>
+              </ul>
+            </article>
+            <article class="timeline-item">
+              <h3>3. Calibracion</h3>
+              <ul>
+                <li>Valor de referencia y tolerancias.</li>
+                <li>Registro de fecha, metodo y responsable.</li>
+                <li>Deteccion de deriva y valores imposibles.</li>
+              </ul>
+            </article>
+            <article class="timeline-item">
+              <h3>4. Operacion</h3>
+              <ul>
+                <li>Bateria, firmware, conectividad y alarmas.</li>
+                <li>Limpieza, sustitucion y recalibracion.</li>
+                <li>Historial de incidencias y trazabilidad.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="energia-mtbf" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Energia y mantenimiento</div>
+              <h2 class="section-title">Medir poco, dormir mucho, transmitir solo lo necesario</h2>
+              <p class="section-subtitle">En sensorica territorial la bateria dicta gran parte del MTBF: si el nodo despierta demasiado, mide demasiado o transmite demasiado, el mantenimiento deja de ser asumible aunque la red funcione.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Sleep mode</span>
+              <span class="chip">Radio TX</span>
+              <span class="chip">MTBF</span>
+            </div>
+          </div>
+
+          <div class="power-profile">
+            <div class="power-chart" aria-hidden="true">
+              <svg viewBox="0 0 760 360" role="img">
+                <defs>
+                  <marker id="arrowHead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z"></path>
+                  </marker>
+                </defs>
+                <g class="grid-lines">
+                  <line x1="72" y1="60" x2="72" y2="304" />
+                  <line x1="160" y1="60" x2="160" y2="304" />
+                  <line x1="248" y1="60" x2="248" y2="304" />
+                  <line x1="336" y1="60" x2="336" y2="304" />
+                  <line x1="424" y1="60" x2="424" y2="304" />
+                  <line x1="512" y1="60" x2="512" y2="304" />
+                  <line x1="600" y1="60" x2="600" y2="304" />
+                  <line x1="48" y1="96" x2="720" y2="96" />
+                  <line x1="48" y1="152" x2="720" y2="152" />
+                  <line x1="48" y1="208" x2="720" y2="208" />
+                  <line x1="48" y1="264" x2="720" y2="264" />
+                </g>
+                <g class="axis-lines">
+                  <line x1="48" y1="304" x2="720" y2="304" />
+                  <line x1="48" y1="304" x2="48" y2="44" />
+                </g>
+                <polyline class="power-line" points="70,294 260,294 300,294 320,286 338,294 560,294 590,288 604,78 618,294 704,294" />
+                <circle class="sleep-point" cx="260" cy="294" r="7" />
+                <path class="callout-line" d="M270 286 L318 236" marker-end="url(#arrowHead)" />
+                <path class="callout-line" d="M584 114 L636 66" marker-end="url(#arrowHead)" />
+                <text class="chart-label" x="236" y="338">Time</text>
+                <text class="chart-label rotate" x="-225" y="22">Power draw</text>
+                <text class="chart-note" x="112" y="250">Sleep mode</text>
+                <text class="chart-note small" x="112" y="270">&lt; microamperios</text>
+                <text class="chart-note" x="486" y="54">Radio TX</text>
+                <text class="chart-note small" x="486" y="74">pico breve de consumo</text>
+              </svg>
+            </div>
+
+            <div class="power-notes">
+              <article class="card">
+                <h3>Sleep mode</h3>
+                <p>El microcontrolador permanece en modo de bajo consumo. La corriente puede estar en el orden de microamperios si el firmware, sensores y reguladores estan bien elegidos.</p>
+              </article>
+              <article class="card">
+                <h3>Adquisicion eficiente</h3>
+                <p>Modos como LPBAM permiten adquirir datos de sensores sin despertar por completo la CPU principal. La idea es medir lo justo y procesar poco en campo.</p>
+              </article>
+              <article class="card">
+                <h3>Radio TX</h3>
+                <p>La transmision puede subir a decenas o cientos de mA, pero dura milisegundos si el payload es pequeno. Por eso conviene empaquetar bien y evitar mensajes innecesarios.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Que optimizar</h3>
+              <ul>
+                <li>Frecuencia de muestreo y envio.</li>
+                <li>Tamano de payload y numero de retransmisiones.</li>
+                <li>Consumo en reposo de sensores, reguladores y modem.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Que vigilar</h3>
+              <ul>
+                <li>Bateria real frente a ficha tecnica.</li>
+                <li>Temperatura, humedad y envejecimiento.</li>
+                <li>Alarmas de bateria baja y plan de sustitucion.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Decision practica</h3>
+              <p>Para nodos rurales a bateria, el objetivo no es enviar mucho: es enviar solo lo necesario, con suficiente calidad, para que el dato sea util y el mantenimiento sea viable.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section accent-top" id="gemelo-digital" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Gemelo digital</div>
+              <h2 class="section-title">El gemelo digital colapsa si falla la capa fisica</h2>
+              <p class="section-subtitle">La fidelidad del modelo depende de nodos aislados donde el MTBF esta unido al presupuesto energetico. Si el nodo pierde bateria, cobertura o diagnostico, el gemelo deja de representar el territorio real.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">MTBF</span>
+              <span class="chip">Payload</span>
+              <span class="chip">Diagnostico</span>
+            </div>
+          </div>
+
+          <div class="digital-twin-grid">
+            <article class="digital-twin-visual">
+              <img src="assets/gemelo-digital-territorial.png" alt="Diapositiva sobre gemelo digital territorial, captura fisica, supervivencia energetica y logistica de radio" />
+            </article>
+            <div class="digital-twin-copy">
+              <article class="card">
+                <h3>Modelo teorico</h3>
+                <p>El gemelo digital asume datos sincronizados, latencia baja, alta fidelidad y nodos virtuales disponibles. Esa vision solo es valida si la capa fisica sostiene la captura de datos.</p>
+              </article>
+              <article class="card">
+                <h3>Realidad territorial</h3>
+                <p>En campo aparecen lluvia, viento, humedad, vandalismo, interferencias, mala cobertura, baterias degradadas y visitas de mantenimiento costosas.</p>
+              </article>
+              <article class="card">
+                <h3>Decision de arquitectura</h3>
+                <p>El diseno debe priorizar supervivencia operativa: menos bytes, menos radio activa, diagnostico remoto, firmware mantenible y alarmas de salud del nodo.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="threat-strip mt-18">
+            <article>
+              <span>1</span>
+              <h3>Obesidad del dato</h3>
+              <p>Payloads verbosos saturan el canal, elevan el time-on-air y drenan bateria. El JSON completo pertenece mejor al backend que a la radio LPWAN.</p>
+            </article>
+            <article>
+              <span>2</span>
+              <h3>Friccion del camino</h3>
+              <p>Cada salto, handshake, retransmision o sesion pesada aumenta consumo. Una ruta simple y robusta vale mas que una arquitectura elegante pero fragil.</p>
+            </article>
+            <article>
+              <span>3</span>
+              <h3>Ceguera de flota</h3>
+              <p>Sin bateria, RSSI/SNR/RSRP, firmware, ultimo contacto y errores, el operador no sabe si el dato falta por silencio normal o por fallo real.</p>
+            </article>
+          </div>
+
+          <div class="protocol-table-wrap mt-18">
+            <table class="protocol-table">
+              <thead>
+                <tr>
+                  <th>Criterio</th>
+                  <th>MQTT</th>
+                  <th>LwM2M</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Mejor ubicacion</th>
+                  <td>Integracion backend, brokers, plataformas cloud y escenarios con energia o conectividad estable.</td>
+                  <td>Gestion de dispositivos restringidos, telemetria ligera, diagnostico remoto y flotas con bateria.</td>
+                </tr>
+                <tr>
+                  <th>Coste de sesion</th>
+                  <td>Normalmente TCP/TLS: muy compatible, pero con mas handshake y tiempo de radio si el nodo despierta poco.</td>
+                  <td>Normalmente CoAP/UDP con DTLS u OSCORE: menor sobrecarga para intercambios cortos.</td>
+                </tr>
+                <tr>
+                  <th>Operacion de flota</th>
+                  <td>Puede resolverse con capas externas, pero requiere diseno especifico para firmware, diagnostico y estado.</td>
+                  <td>Incluye objetos estandarizados para dispositivo, firmware, localizacion, sensores IPSO y salud operativa.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Lectura senior:</strong> MQTT es muy util cuando el dato ya salio del territorio. LwM2M es especialmente potente cuando todavia se esta gestionando el nodo en el territorio: bateria, firmware, diagnostico, senal y supervivencia.
+          </div>
+        </section>
+
+        <section class="panel section" id="arquitectura" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Arquitectura</div>
+              <h2 class="section-title">Gateways, servidores de red y recoleccion</h2>
+              <p class="section-subtitle">El gateway no es la plataforma final. En LoRaWAN recibe radio y reenvia paquetes; el servidor de red gestiona dispositivos, seguridad, duplicados, contadores, payload formatters e integraciones.</p>
+            </div>
+          </div>
+
+          <div class="architecture">
+            <div class="arch-node">Nodo sensor<br><span>bytes + metadatos</span></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node">Gateway / operador<br><span>radio o red celular</span></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node">Servidor de red<br><span>TTN, TTS, ChirpStack</span></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node">Integracion<br><span>MQTT, HTTP, API</span></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node">Plataforma<br><span>JSON, historico, alertas</span></div>
+          </div>
+
+          <div class="grid-2 mt-18">
+            <article class="card">
+              <h3>TTN / The Things Stack</h3>
+              <p>Muy util para docencia, prototipos y validacion rapida. Permite crear aplicaciones, registrar dispositivos, simular uplinks, probar decoders y ver Live data sin operar un servidor propio.</p>
+            </article>
+            <article class="card">
+              <h3>ChirpStack</h3>
+              <p>Encaja cuando se quiere una red LoRaWAN privada o autogestionada, con mayor control sobre gateways, integraciones y soberania del dato. Requiere mas operacion tecnica.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section accent-top" id="fog-edge" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Edge/Fog security</div>
+              <h2 class="section-title">Seguridad hardware en dispositivos de borde IoT</h2>
+              <p class="section-subtitle">El paper <em>Hardware Security of Fog End-Devices for the Internet of Things</em> refuerza una idea clave: cuando el gateway o dispositivo fog procesa datos cerca del territorio, tambien se convierte en activo critico. Hay que protegerlo contra malware, credenciales debiles, manipulacion fisica y extraccion de secretos.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Fog</span>
+              <span class="chip">HSM</span>
+              <span class="chip">PUF</span>
+            </div>
+          </div>
+
+          <div class="edge-flow">
+            <article>
+              <span>Nodo</span>
+              <h3>Sensor restringido</h3>
+              <p>Genera medidas, eventos y diagnostico con energia limitada.</p>
+            </article>
+            <article>
+              <span>Fog</span>
+              <h3>Gateway inteligente</h3>
+              <p>Filtra, valida, agrega, aplica reglas locales y reduce latencia.</p>
+            </article>
+            <article>
+              <span>Cloud</span>
+              <h3>Plataforma central</h3>
+              <p>Historico, analitica, gemelo digital, integraciones y gobierno del dato.</p>
+            </article>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Por que fog</h3>
+              <p>Procesar en borde reduce latencia, baja ancho de banda hacia cloud y permite decisiones locales cuando la conectividad es volatil. En IoT territorial puede ser la diferencia entre reaccionar en campo o esperar a que el dato llegue a plataforma.</p>
+            </article>
+            <article class="card">
+              <h3>Nuevo riesgo</h3>
+              <p>El gateway deja de ser un simple puente. Si almacena claves, ejecuta logica o filtra eventos, un compromiso afecta integridad del dato, disponibilidad de alarmas y privacidad antes incluso de llegar al servidor.</p>
+            </article>
+            <article class="card">
+              <h3>Lectura practica</h3>
+              <p>La seguridad de borde debe cubrir software y hardware: firmware, arranque, identidad criptografica, almacenamiento de secretos, puertos fisicos, carcasa, alimentacion y cadena de actualizacion.</p>
+            </article>
+          </div>
+
+          <div class="protocol-table-wrap mt-18">
+            <table class="protocol-table">
+              <thead>
+                <tr>
+                  <th>Control</th>
+                  <th>Funcion</th>
+                  <th>Aplicacion territorial</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>HSM / Secure Element</th>
+                  <td>Custodia claves y operaciones criptograficas fuera del firmware general.</td>
+                  <td>Proteger claves de gateway, certificados TLS/DTLS, identidad de dispositivo y firmas OTA.</td>
+                </tr>
+                <tr>
+                  <th>PUF</th>
+                  <td>Deriva identidad unica desde variaciones fisicas del chip, dificil de clonar.</td>
+                  <td>Identidad de nodo o gateway sin almacenar una clave estatica facilmente extraible.</td>
+                </tr>
+                <tr>
+                  <th>TRM / Tamper resistant memory</th>
+                  <td>Reduce exposicion de secretos ante manipulacion fisica o lectura no autorizada.</td>
+                  <td>Activos en campo: estaciones de bombeo, cauces, armarios, gateways aislados o smart parking.</td>
+                </tr>
+                <tr>
+                  <th>Secure boot</th>
+                  <td>Verifica que el firmware arrancado no ha sido alterado.</td>
+                  <td>Evita que un atacante instale firmware modificado para falsear datos o abrir backdoors.</td>
+                </tr>
+                <tr>
+                  <th>SoC con raiz de confianza</th>
+                  <td>Integra arranque seguro, proteccion de memoria, aceleracion criptografica y aislamiento.</td>
+                  <td>Gateways fog y nodos avanzados que ejecutan decoders, reglas locales o almacenamiento temporal.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Conexion con pentesting:</strong> en una auditoria IoT no basta con revisar puertos abiertos o APIs. Tambien hay que comprobar credenciales por defecto, debug físico, firmware, almacenamiento de claves, actualizaciones, tamper y capacidad del dispositivo para resistir manipulacion en campo.
+          </div>
+        </section>
+
+        <section class="panel section" id="orquestacion" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Orquestacion de flotas</div>
+              <h2 class="section-title">LwM2M frente a MQTT</h2>
+              <p class="section-subtitle">Cuando el despliegue crece, no basta con recibir telemetria. Hay que gestionar identidad, sesiones, configuracion, diagnostico, firmware OTA y consumo de cientos o miles de nodos.</p>
+            </div>
+          </div>
+
+          <div class="protocol-table-wrap">
+            <table class="protocol-table">
+              <thead>
+                <tr>
+                  <th>Criterio</th>
+                  <th>LwM2M</th>
+                  <th>MQTT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Transporte</th>
+                  <td><strong>UDP / CoAP.</strong> Sin conexion persistente y con bajo overhead.</td>
+                  <td><strong>TCP.</strong> Orientado a conexion; requiere handshake y, normalmente, sesion TLS.</td>
+                </tr>
+                <tr>
+                  <th>Eficiencia inicial</th>
+                  <td>Menos datos al iniciar sesion y menor tiempo de modem encendido.</td>
+                  <td>Mayor consumo por establecimiento de TCP/TLS y mantenimiento de sesion.</td>
+                </tr>
+                <tr>
+                  <th>Firmware OTA</th>
+                  <td>Nativo, con transferencias fragmentadas por bloques CoAP y modelo de objetos.</td>
+                  <td>No estandarizado por MQTT en si; depende de convenciones, topics y plataforma.</td>
+                </tr>
+                <tr>
+                  <th>Mejor uso</th>
+                  <td>Gestion de flotas, configuracion remota, diagnostico y dispositivos con bateria.</td>
+                  <td>Telemetria frecuente, integracion sencilla con brokers y arquitecturas event-driven.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid-2 mt-18">
+            <article class="card">
+              <h3>Insight operativo</h3>
+              <p>En flotas grandes, MQTT puede obligar al modem celular a permanecer encendido tiempo extra para negociar y mantener sesiones TCP/TLS. Ese coste no se ve en un piloto pequeno, pero acorta autonomia cuando hay cientos de nodos.</p>
+            </article>
+            <article class="card">
+              <h3>Decision razonable</h3>
+              <p>Usar MQTT cuando se prioriza integracion simple y telemetria hacia plataformas. Considerar LwM2M cuando se necesita gestion integral de dispositivo, OTA estandarizado y optimizacion fuerte de consumo.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="seguridad" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Operacion</div>
+              <h2 class="section-title">Seguridad fisica y eficiencia energetica</h2>
+              <p class="section-subtitle">En IoT territorial la seguridad no es solo cifrado. Tambien es evitar manipulaciones, perdidas de servicio, lecturas falsas, robo de equipos, agotamiento prematuro de baterias y despliegues imposibles de mantener.</p>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <article class="card">
+              <h3>Capa fisica</h3>
+              <ul>
+                <li>Cajas IP adecuadas, prensaestopas y proteccion UV.</li>
+                <li>Anclaje, antimanipulacion y ubicacion discreta.</li>
+                <li>Proteccion de antena, conectores y alimentacion.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Eficiencia energetica</h3>
+              <ul>
+                <li>Duty cycle, periodicidad y payload compacto.</li>
+                <li>Sleep modes, bateria, panel solar o red electrica.</li>
+                <li>Telemetria de bateria para mantenimiento preventivo.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Fiabilidad del dato</h3>
+              <ul>
+                <li>Rangos fisicos plausibles y deteccion de outliers.</li>
+                <li>Timestamp, identificador de dispositivo y version de decoder.</li>
+                <li>Control de perdidas, duplicados y gaps temporales.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section accent-top" id="logistica-iot" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">IoT movil</div>
+              <h2 class="section-title">Logistica digital: sensores en movimiento y amenaza contextual</h2>
+              <p class="section-subtitle">El paper <em>Threat Modeling for Communication Security of IoT-Enabled Digital Logistics</em> recuerda que un sensor logistico no vive en un laboratorio: se mueve, queda inaccesible durante el viaje y opera en entornos no controlados. El modelo de amenazas debe incluir ataques y tambien fallos no maliciosos.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Tracking</span>
+              <span class="chip">M2M</span>
+              <span class="chip">Fraude</span>
+            </div>
+          </div>
+
+          <div class="logistics-flow">
+            <article>
+              <span>Tags</span>
+              <h3>Sensores de condicion</h3>
+              <p>Temperatura, humedad, aceleracion, shocks y estado de bateria en pallets, contenedores o activos moviles.</p>
+            </article>
+            <article>
+              <span>Gateway</span>
+              <h3>Concentrador local</h3>
+              <p>Sincroniza sensores, recibe medidas, almacena datos y envia resumen por LTE, LPWAN o backhaul disponible.</p>
+            </article>
+            <article>
+              <span>Backend</span>
+              <h3>Evidencia digital</h3>
+              <p>Ubicacion, historico de condicion, trazabilidad documental y enlace fisico-digital con el activo real.</p>
+            </article>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Condiciones reales</h3>
+              <ul>
+                <li>Movilidad, roaming y cobertura variable.</li>
+                <li>Dispositivos inaccesibles durante el despliegue.</li>
+                <li>Entornos no controlados: puerto, carretera, almacen, buque o patio exterior.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Amenazas de comunicacion</h3>
+              <ul>
+                <li>Jamming, escucha, MitM, spoofing y replay.</li>
+                <li>Clonado, suplantacion o modificacion de tags.</li>
+                <li>Inyeccion de codigo o tramas maliciosas en servicios que procesan datos.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Fallos no maliciosos</h3>
+              <ul>
+                <li>Golpes, vibracion y aceleraciones excesivas.</li>
+                <li>Humedad, temperatura, condensacion y corrosion.</li>
+                <li>Perdida de bateria, desconexion o dano accidental por manipulacion logistica.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="protocol-table-wrap mt-18">
+            <table class="protocol-table">
+              <thead>
+                <tr>
+                  <th>Riesgo</th>
+                  <th>Impacto</th>
+                  <th>Contramedida razonable</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Replay o spoofing</th>
+                  <td>Datos falsos de posicion, condicion o identidad del activo.</td>
+                  <td>Autenticacion de mensajes, contadores, timestamps, nonces y claves separadas para cifrado/autenticacion.</td>
+                </tr>
+                <tr>
+                  <th>Jamming o perdida de enlace</th>
+                  <td>Huecos de trazabilidad y perdida de alarmas durante transporte.</td>
+                  <td>Buffer local, reenvio diferido, alarmas por gaps, multioperador o enlace alternativo en activos criticos.</td>
+                </tr>
+                <tr>
+                  <th>Dano fisico</th>
+                  <td>Sensor inutilizable o medidas degradadas sin intencion maliciosa.</td>
+                  <td>Encapsulado, montaje mecanico, sensor de tamper/shock, redundancia de tags y validacion cruzada.</td>
+                </tr>
+                <tr>
+                  <th>Fraude o sustitucion</th>
+                  <td>El dato digital deja de representar el activo fisico real.</td>
+                  <td>Vinculo fisico-digital, identidad fuerte, trazabilidad de custodia y coherencia entre sensores vecinos.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Traslado a IoT territorial:</strong> el mismo enfoque sirve para maquinaria municipal, estaciones temporales, contenedores, sensores de obra, equipos de emergencia o activos rurales moviles. Si el dispositivo viaja o queda fuera de control, el threat model debe cubrir comunicacion, fisico, entorno y fraude.
+          </div>
+        </section>
+
+        <section class="panel section accent-top" id="pentesting" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Pentesting defensivo</div>
+              <h2 class="section-title">Como auditar y securizar sensores, telemetria y recoleccion IoT</h2>
+              <p class="section-subtitle">El pentesting en IoT territorial debe partir de autorizacion, alcance y evidencia. No se trata solo de romper un nodo: hay que evaluar radio, credenciales, firmware, gateways, red de transporte, payloads, backend y operacion de campo.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Scope</span>
+              <span class="chip">Red/Blue</span>
+              <span class="chip">Hardening</span>
+              <span class="chip">Evidencias</span>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <article class="card">
+              <h3>1. Alcance autorizado</h3>
+              <ul>
+                <li>Inventario de nodos, gateways, servidores, cuentas, SIM/eSIM y aplicaciones TTN/ChirpStack.</li>
+                <li>Ventanas de prueba, ubicaciones permitidas y limites de potencia, radio y disponibilidad.</li>
+                <li>Criterio claro: pruebas sin afectar alertas reales, servicios municipales ni datos de terceros.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>2. Superficie de ataque</h3>
+              <ul>
+                <li>Acceso fisico al nodo, conectores, antena, puerto de depuracion, carcasa y alimentacion.</li>
+                <li>Radio LPWAN, backhaul del gateway, consola cloud, API, decoder, integraciones y almacenamiento.</li>
+                <li>Proceso de firmware, provisionamiento, rotacion de claves y baja de dispositivos retirados.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>3. Evidencia tecnica</h3>
+              <ul>
+                <li>Capturas de configuracion, logs, trazas de red, versiones, CVE aplicables y matriz de riesgos.</li>
+                <li>Impacto expresado en disponibilidad, integridad del dato, privacidad, autonomia y mantenimiento.</li>
+                <li>Recomendaciones verificables: control aplicado, responsable y prueba de cierre.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="protocol-table-wrap mt-18">
+            <table class="protocol-table">
+              <thead>
+                <tr>
+                  <th>Tecnologia</th>
+                  <th>Que revisar en pentest</th>
+                  <th>Como securizar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>LoRaWAN</th>
+                  <td>Join procedure, DevEUI/AppEUI/JoinEUI, uso de OTAA frente a ABP, contadores de trama, ADR, payload formatter, exposicion de metadata y disponibilidad de gateways.</td>
+                  <td>Preferir OTAA, claves unicas por dispositivo, control de frame counters, gateways redundantes en puntos criticos, monitorizacion de perdida de enlace y separacion entre servidor de red e integraciones.</td>
+                </tr>
+                <tr>
+                  <th>NB-IoT / LTE-M</th>
+                  <td>Gestion de SIM/eSIM, APN privado o publico, roaming, exposicion de IP, consumo por reconexion, sesiones TCP/TLS, certificados y dependencia del operador.</td>
+                  <td>APN privado o VPN cuando aplique, TLS con validacion correcta, inventario de SIM, politicas de baja, perfiles multioperador para activos criticos y confirmaciones solo en alarmas relevantes.</td>
+                </tr>
+                <tr>
+                  <th>Gateways</th>
+                  <td>Credenciales por defecto, SSH, panel web, firmware, backhaul 4G/fibra, reglas firewall, ubicacion fisica, alimentacion y reinicios no supervisados.</td>
+                  <td>Cambiar credenciales, cerrar servicios innecesarios, actualizar firmware, usar VPN o allowlist, alimentacion de respaldo, ubicacion protegida y alertas de caida.</td>
+                </tr>
+                <tr>
+                  <th>Payload y backend</th>
+                  <td>Validacion de rangos, replay logico, duplicados, errores de decoder, unidades, timestamp, autorizacion API y filtrado de datos anormales.</td>
+                  <td>Versionar decoders, validar rangos fisicos, firmar o autenticar integraciones, registrar auditoria, aplicar minimo privilegio y separar entorno de pruebas del productivo.</td>
+                </tr>
+                <tr>
+                  <th>Firmware y nodo</th>
+                  <td>Puerto debug, bootloader, actualizacion OTA, secretos embebidos, lectura de memoria, manipulacion de sensores, bateria y comportamiento ante tamper.</td>
+                  <td>Bloquear debug en produccion, secure boot cuando sea viable, OTA firmada, secretos no reutilizados, deteccion de tamper y telemetria de salud del nodo.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="protocol-table-wrap mt-18">
+            <table class="protocol-table">
+              <thead>
+                <tr>
+                  <th>Dominio</th>
+                  <th>Red side: validacion autorizada</th>
+                  <th>Blue side: defensa, deteccion y respuesta</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Radio y cobertura</th>
+                  <td>Mapear cobertura real, zonas ciegas, RSSI/SNR, solape de gateways, sensibilidad a interferencia y comportamiento ante perdida temporal de enlace en entorno controlado.</td>
+                  <td>Alertas por caida de gateway, bajada anomala de SNR, subida de reintentos, huecos de uplink, cambios bruscos de ADR y perdida de diversidad de gateways.</td>
+                </tr>
+                <tr>
+                  <th>Identidad y claves</th>
+                  <td>Comprobar claves reutilizadas, ABP mal gestionado, DevNonce/JoinNonce, contadores de trama, secretos en firmware, credenciales por defecto y exposicion accidental en repositorios o capturas.</td>
+                  <td>Inventario de identidades, claves unicas por nodo, rotacion planificada, baja segura de activos retirados, control de acceso por rol y registros de cambios en consola TTN/ChirpStack/cloud.</td>
+                </tr>
+                <tr>
+                  <th>Gateway y backhaul</th>
+                  <td>Revisar puertos expuestos, paneles web, SSH, VPN, firewall, version de firmware, logs, almacenamiento local, alimentacion, SIM de backhaul y resistencia a reinicios.</td>
+                  <td>Hardening CIS-like, VPN/allowlist, MFA donde aplique, syslog remoto, watchdog, SAI o bateria, backup de configuracion, alerta de tamper y monitorizacion de latencia/backhaul.</td>
+                </tr>
+                <tr>
+                  <th>Payload, decoder y APIs</th>
+                  <td>Probar payloads limite, longitudes incorrectas, unidades incoherentes, timestamps anormales, duplicados, replay logico, errores de parser y autorizacion de endpoints MQTT/HTTP/LwM2M.</td>
+                  <td>Validacion por esquema y rango fisico, versionado de decoders, cuarentena de datos anormales, trazabilidad de payload crudo, API keys con minimo privilegio y alertas por volumen inusual.</td>
+                </tr>
+                <tr>
+                  <th>Firmware y fisico</th>
+                  <td>Analisis estatico/dinamico, SBOM, CVE, UART/JTAG/SWD, bootloader, OTA, firma, debug activo, lectura de memoria, sensores manipulables, carcasa, antena y bateria.</td>
+                  <td>Secure boot, OTA firmada con rollback seguro, debug bloqueado, secretos fuera del binario, deteccion de apertura, health telemetry, temperatura/bateria, plan de sustitucion y cadena de custodia.</td>
+                </tr>
+                <tr>
+                  <th>Operacion SOC / NOC</th>
+                  <td>Ejercicios de mesa: perdida de gateway, bateria masiva baja, credencial filtrada, decoder roto, SIM comprometida, sensor sustituido o datos falsos pero plausibles.</td>
+                  <td>Runbooks, responsables, SLAs por criticidad, dashboards, retencion de logs, integracion SIEM, correlacion con meteo/energia/campo y prueba periodica de restauracion.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Red side tecnico</h3>
+              <ul>
+                <li>Reconocimiento RF y mapa de cobertura con RSSI/SNR, gateways vistos y ventanas de perdida.</li>
+                <li>Revision de exposicion: DNS, paneles, MQTT/HTTP, VPN, APN, buckets, repositorios y credenciales filtradas.</li>
+                <li>Auditoria de firmware: binwalk/strings/SBOM, librerias, CVE, secretos, debug y servicios innecesarios.</li>
+                <li>Pruebas de resiliencia en laboratorio: replay logico, payloads corruptos, reconexiones, caida controlada de gateway y consumo por reintentos.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Blue side operativo</h3>
+              <ul>
+                <li>Baseline por nodo: frecuencia esperada, bateria, SNR/RSSI, gateways recibidos, contador de tramas y latencia.</li>
+                <li>Alertas por desviacion: silence inesperado, MIC failures, join spikes, frame counter reset, payload fuera de rango y consumo anomalo.</li>
+                <li>Segmentacion: red de gateways separada, VPN, allowlist, minimo privilegio, MFA y logs enviados fuera del equipo.</li>
+                <li>Respuesta: aislar integracion, revocar claves, rotar credenciales, desactivar SIM, sustituir nodo y conservar evidencia.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Indicadores utiles</h3>
+              <ul>
+                <li>Subida repentina de downlinks, confirmed uplinks o reintentos: posible drenaje de bateria.</li>
+                <li>Muchos joins o DevNonce sospechosos: error de provisionamiento o intento de abuso.</li>
+                <li>Dato fisicamente imposible pero bien formado: riesgo de integridad, no solo de parser.</li>
+                <li>Gateway unico en alerta critica: riesgo de disponibilidad aunque la criptografia sea correcta.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Checklist rapido</h3>
+              <ul>
+                <li>No usar claves compartidas entre nodos.</li>
+                <li>No publicar payloads, tokens ni capturas con identificadores reales.</li>
+                <li>No dejar gateways con administracion abierta a Internet.</li>
+                <li>No mezclar dispositivos de laboratorio con produccion.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Pruebas defensivas utiles</h3>
+              <ul>
+                <li>Revision de configuracion LoRaWAN/TTN/ChirpStack.</li>
+                <li>Analisis de consumo ante reintentos, downlinks y reconexiones.</li>
+                <li>Validacion de decoder con payloads limite y datos fuera de rango.</li>
+                <li>Auditoria de firmware, versiones y servicios expuestos.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Salida profesional</h3>
+              <ul>
+                <li>Matriz riesgo-impacto-probabilidad.</li>
+                <li>Plan de remediacion por prioridad.</li>
+                <li>Prueba de cierre y evidencia comparativa.</li>
+                <li>Lecciones para operacion y mantenimiento.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="firmware-audit mt-18">
+            <div class="section-head compact-head">
+              <div>
+                <div class="eyebrow">Auditoria de firmware</div>
+                <h3 class="subsection-title">Vulnerabilidades y tecnicas de analisis</h3>
+                <p class="section-subtitle">El paper <em>A Review of IoT Firmware Vulnerabilities and Auditing Techniques</em> propone auditar el firmware como un entorno completo: componentes software, configuracion, almacenamiento, interfaces, entrega, mantenimiento y actualizacion.</p>
+              </div>
+            </div>
+
+            <div class="audit-taxonomy">
+              <span>Propiedades del sistema</span>
+              <span>Controles de acceso</span>
+              <span>Reutilizacion HW/SW</span>
+              <span>Interfaces de red</span>
+              <span>Gestion de imagen</span>
+              <span>Conciencia de usuario</span>
+              <span>Cumplimiento</span>
+              <span>Vectores adversarios</span>
+            </div>
+
+            <div class="protocol-table-wrap mt-18">
+              <table class="protocol-table">
+                <thead>
+                  <tr>
+                    <th>Tecnica</th>
+                    <th>Que aporta</th>
+                    <th>Uso en IoT territorial</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Analisis estatico</th>
+                    <td>Extrae firmware, binarios, strings, librerias, configuraciones, claves embebidas y CVE conocidas sin ejecutar el dispositivo.</td>
+                    <td>Revision rapida de gateways, nodos comerciales, routers 4G y equipos LPWAN antes de desplegarlos en campo.</td>
+                  </tr>
+                  <tr>
+                    <th>Analisis dinamico</th>
+                    <td>Observa comportamiento real: procesos, servicios, llamadas, trafico, credenciales en uso y endpoints externos.</td>
+                    <td>Detectar puertos abiertos, reconexiones inseguras, servicios innecesarios y exposicion de datos durante operacion.</td>
+                  </tr>
+                  <tr>
+                    <th>Emulacion / re-hosting</th>
+                    <td>Ejecuta partes del firmware fuera del hardware original para probar servicios y rutas de ataque de forma controlada.</td>
+                    <td>Auditar firmware sin tocar un nodo critico en produccion o sin desplazarse a ubicaciones remotas.</td>
+                  </tr>
+                  <tr>
+                    <th>Fuzzing</th>
+                    <td>Genera entradas anormales para descubrir fallos en parsers, APIs, payload formatters, protocolos o servicios web embebidos.</td>
+                    <td>Probar decoders, endpoints locales, paneles web de gateway y servicios de configuracion antes de exponerlos.</td>
+                  </tr>
+                  <tr>
+                    <th>Hibrido</th>
+                    <td>Combina hallazgos estaticos con ejecucion o emulacion para mejorar cobertura y reducir falsos positivos.</td>
+                    <td>Metodo mas realista para informes senior: evidencia tecnica, impacto operativo y remediacion verificable.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="grid-3 mt-18">
+              <article class="card">
+                <h3>Buscar primero</h3>
+                <ul>
+                  <li>Credenciales por defecto o hardcoded.</li>
+                  <li>Servicios debug, Telnet/SSH/web sin endurecer.</li>
+                  <li>Librerias antiguas y CVE conocidas.</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Riesgos de ciclo de vida</h3>
+                <ul>
+                  <li>Dispositivos no actualizables.</li>
+                  <li>OTA sin firma o sin rollback.</li>
+                  <li>Imagenes de firmware sin versionado trazable.</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Salida de auditoria</h3>
+                <ul>
+                  <li>SBOM o inventario de componentes.</li>
+                  <li>Matriz CVE/configuracion/impacto.</li>
+                  <li>Plan de hardening y prueba de cierre.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+
+          <div class="code-injection-audit mt-18">
+            <div class="section-head compact-head">
+              <div>
+                <div class="eyebrow">IoT inalambrico</div>
+                <h3 class="subsection-title">Inyeccion de codigo y firmware malicioso</h3>
+                <p class="section-subtitle">El paper sobre <em>Code Injection Attacks in Wireless-Based IoT</em> subraya que el riesgo no esta solo en la radio: tambien en el software que parsea tramas, los servicios que consumen datos inalambricos y el firmware que puede contener backdoors.</p>
+              </div>
+            </div>
+
+            <div class="attack-chain">
+              <article>
+                <span>Entrada</span>
+                <h3>Frame o dato no confiable</h3>
+                <p>Tramas WiFi/BLE/Zigbee/LPWAN, payloads, metadatos o campos de configuracion que llegan al parser.</p>
+              </article>
+              <article>
+                <span>Procesado</span>
+                <h3>Parser vulnerable</h3>
+                <p>Software embebido, scanner, decoder, panel web o servicio local que no valida longitud, formato o caracteres.</p>
+              </article>
+              <article>
+                <span>Impacto</span>
+                <h3>Compromiso encadenado</h3>
+                <p>Ejecucion remota, escalada, persistencia, backdoor, fuga de datos, denegacion de servicio o movimiento lateral.</p>
+              </article>
+            </div>
+
+            <div class="grid-3 mt-18">
+              <article class="card">
+                <h3>Superficie a revisar</h3>
+                <ul>
+                  <li>Parsers de frames, payloads y decoders.</li>
+                  <li>Paneles web embebidos y endpoints locales.</li>
+                  <li>Firmware de routers, gateways y radios WiFi/BLE/Zigbee/LPWAN.</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Controles defensivos</h3>
+                <ul>
+                  <li>Validacion estricta de longitud, tipo, rango y codificacion.</li>
+                  <li>Separacion de privilegios para servicios de parsing.</li>
+                  <li>Firmware firmado, secure boot y verificacion de integridad.</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Evidencia de auditoria</h3>
+                <ul>
+                  <li>Casos de prueba con entradas anormales controladas.</li>
+                  <li>Logs de rechazo, errores y reinicios.</li>
+                  <li>Analisis de firmware para detectar backdoors o codigo sospechoso.</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="note mt-18">
+              <strong>Criterio IMECA:</strong> valorar cada hallazgo por modo de intrusion, impacto operativo y criticidad. En IoT territorial, una inyeccion no solo compromete datos: puede tumbar un gateway, falsear alertas, agotar bateria o abrir una puerta a la red municipal.
+            </div>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Regla senior:</strong> en IoT territorial, una vulnerabilidad no siempre busca robar datos. A menudo el impacto real es dejar un nodo sin bateria, perder una alerta de nivel de rio, falsear una medida o impedir el mantenimiento. La securizacion debe proteger confidencialidad, integridad, disponibilidad y autonomia.
+          </div>
+        </section>
+
+        <section class="panel section" id="arquitectura-segura" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Arquitectura segura</div>
+              <h2 class="section-title">Referencia end-to-end para IoT territorial</h2>
+              <p class="section-subtitle">Una arquitectura madura separa captura, transporte, gestion, seguridad y observabilidad. El objetivo no es solo recibir datos: es saber que nodo envio que, con que calidad, bajo que identidad y con que capacidad de respuesta ante fallo.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Data plane</span>
+              <span class="chip">Control plane</span>
+              <span class="chip">Observabilidad</span>
+            </div>
+          </div>
+
+          <div class="architecture secure-architecture">
+            <div class="arch-node">Sensor<br><span>magnitud fisica</span></div>
+            <div class="arch-arrow">-></div>
+            <div class="arch-node">Nodo<br><span>firmware + payload</span></div>
+            <div class="arch-arrow">-></div>
+            <div class="arch-node">LPWAN<br><span>LoRaWAN / NB-IoT / LTE-M</span></div>
+            <div class="arch-arrow">-></div>
+            <div class="arch-node">Gateway u operador<br><span>radio + backhaul</span></div>
+            <div class="arch-arrow">-></div>
+            <div class="arch-node">Network server<br><span>identidad + contadores</span></div>
+            <div class="arch-arrow">-></div>
+            <div class="arch-node">Decoder<br><span>bytes a evento validado</span></div>
+            <div class="arch-arrow">-></div>
+            <div class="arch-node">Broker / API<br><span>MQTT, HTTP, LwM2M</span></div>
+            <div class="arch-arrow">-></div>
+            <div class="arch-node">Plataforma<br><span>historico, alertas, SIEM</span></div>
+          </div>
+
+          <div class="grid-4 mt-18">
+            <article class="card">
+              <h3>Plano de datos</h3>
+              <p>Define como viaja la medida: frecuencia, payload binario, version de decoder, timestamp, unidades, calidad de senal, duplicados y normalizacion final.</p>
+            </article>
+            <article class="card">
+              <h3>Plano de gestion</h3>
+              <p>Incluye altas, bajas, provisionamiento, OTA, inventario de firmware, SIM/eSIM, ubicacion fisica, mantenimiento y sustitucion planificada.</p>
+            </article>
+            <article class="card">
+              <h3>Plano de seguridad</h3>
+              <p>Cubre identidad de dispositivo, claves unicas, TLS/DTLS, hardening de gateways, minimo privilegio, rotacion, tamper y proteccion de secretos.</p>
+            </article>
+            <article class="card">
+              <h3>Plano de observabilidad</h3>
+              <p>Recoge logs, metricas, RSSI/SNR, bateria, joins, reintentos, frame counters, caidas de gateway, salud de decoder y alertas operativas.</p>
+            </article>
+          </div>
+
+          <div class="protocol-table-wrap mt-18">
+            <table class="protocol-table">
+              <thead>
+                <tr>
+                  <th>Capa</th>
+                  <th>Decision tecnica</th>
+                  <th>Control recomendado</th>
+                  <th>Evidencia esperada</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Campo</th>
+                  <td>Sensor, encapsulado, alimentacion, antena, montaje y calibracion.</td>
+                  <td>IP/IK adecuados, proteccion UV/corrosion, tamper, sellado, ficha de instalacion y plan de recalibracion.</td>
+                  <td>Foto de instalacion, coordenadas, numero de serie, fecha, responsable y prueba de lectura.</td>
+                </tr>
+                <tr>
+                  <th>Radio</th>
+                  <td>LoRaWAN privado, NB-IoT/LTE-M, cobertura, clase, duty cycle y politica de ACK.</td>
+                  <td>Site survey, solape en puntos criticos, confirmed uplink solo en alarmas, ADR controlado y backoff ante fallo.</td>
+                  <td>Mapa RSSI/SNR, gateways vistos, consumo medido y comportamiento ante perdida de enlace.</td>
+                </tr>
+                <tr>
+                  <th>Gateway / operador</th>
+                  <td>Backhaul, alimentacion, firmware, acceso remoto y ubicacion fisica.</td>
+                  <td>VPN/allowlist, MFA, firewall, SAI/bateria, watchdog, syslog remoto y alertas de disponibilidad.</td>
+                  <td>Configuracion exportada, version, logs, prueba de reinicio y prueba de caida controlada.</td>
+                </tr>
+                <tr>
+                  <th>Backend</th>
+                  <td>Network server, decoder, broker/API, almacenamiento y dashboard.</td>
+                  <td>Separacion dev/prod, API keys por integracion, validacion de rango, trazabilidad de payload crudo y versionado de decoders.</td>
+                  <td>Evento normalizado, payload original, version de decoder, logs de rechazo y auditoria de acceso.</td>
+                </tr>
+                <tr>
+                  <th>Operacion</th>
+                  <td>Alertas, mantenimiento, rotacion de claves, baja de activos y respuesta a incidentes.</td>
+                  <td>Runbooks, SLAs por criticidad, inventario vivo, retencion de logs, pruebas periodicas y tablero NOC/SOC.</td>
+                  <td>Tickets, tiempos de respuesta, cambios aprobados, informe de incidente y prueba de cierre.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Criterio de diseno:</strong> si un dato activa una decision territorial, debe viajar con contexto suficiente para defenderlo: identidad del nodo, calidad de senal, timestamp, version del decoder, estado de bateria y trazabilidad de integracion.
+          </div>
+        </section>
+
+        <section class="panel section accent-top" id="errores-diseno" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Errores tipicos</div>
+              <h2 class="section-title">Fallos de diseno en despliegues IoT territoriales</h2>
+              <p class="section-subtitle">Muchos problemas no aparecen por elegir una tecnologia mala, sino por aplicar una tecnologia correcta con supuestos de laboratorio: cobertura teorica, bateria ideal, decoders sin versionar o seguridad tratada al final.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Anti-patterns</span>
+              <span class="chip">Campo real</span>
+              <span class="chip">Remediacion</span>
+            </div>
+          </div>
+
+          <div class="protocol-table-wrap">
+            <table class="protocol-table">
+              <thead>
+                <tr>
+                  <th>Error</th>
+                  <th>Por que falla</th>
+                  <th>Como corregirlo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Enviar JSON completo por LPWAN</th>
+                  <td>Aumenta Time-on-Air, congestiona canal y drena bateria para transmitir semantica que puede reconstruirse en backend.</td>
+                  <td>Usar payload binario, Cayenne LPP o formato propio documentado, con decoder versionado y pruebas de rango.</td>
+                </tr>
+                <tr>
+                  <th>Confirmed uplinks para todo</th>
+                  <td>Cada confirmacion implica downlink, ventanas de recepcion, reintentos y mas consumo. En LoRaWAN tambien tensiona la capacidad de bajada.</td>
+                  <td>Confirmar solo alarmas criticas; usar telemetria periodica no confirmada, keepalive y deteccion por silencio.</td>
+                </tr>
+                <tr>
+                  <th>Un solo gateway para alertas criticas</th>
+                  <td>La criptografia puede estar bien, pero la disponibilidad depende de un punto unico de fallo.</td>
+                  <td>Solape de cobertura, gateway redundante, alimentacion de respaldo, backhaul alternativo y alerta por perdida de diversidad.</td>
+                </tr>
+                <tr>
+                  <th>Cobertura teorica sin site survey</th>
+                  <td>La orografia, vegetacion, edificios, humedad, altura de antena y estacion del ano cambian el enlace real.</td>
+                  <td>Medir RSSI/SNR en campo, registrar gateways vistos, probar condiciones adversas y dejar margen de enlace.</td>
+                </tr>
+                <tr>
+                  <th>No medir consumo real</th>
+                  <td>La ficha tecnica no refleja firmware, sensores, reguladores, reconexiones, temperatura ni envejecimiento de bateria.</td>
+                  <td>Perfil de corriente con sleep, medida, TX, RX, reintentos y arranque; calcular autonomia con margen y validar en piloto.</td>
+                </tr>
+                <tr>
+                  <th>Claves compartidas o capturas publicadas</th>
+                  <td>Un secreto filtrado compromete mas de un nodo y dificulta la atribucion del fallo.</td>
+                  <td>Claves unicas por dispositivo, rotacion, minimo privilegio, capturas anonimizadas y procedimiento de baja.</td>
+                </tr>
+                <tr>
+                  <th>Decoder sin versionar</th>
+                  <td>Un cambio de firmware o escala puede romper historicos, alertas y dashboards sin que el error sea evidente.</td>
+                  <td>Versionar formato de payload, mantener pruebas unitarias de decoder y guardar payload crudo para reprocesado.</td>
+                </tr>
+                <tr>
+                  <th>Debug activo en produccion</th>
+                  <td>UART/JTAG/SWD, bootloader o consola local pueden exponer firmware, claves y configuracion.</td>
+                  <td>Bloquear debug, usar secure boot cuando sea viable, proteger secretos y documentar excepciones de mantenimiento.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Senales tempranas</h3>
+              <ul>
+                <li>Bateria cae mas rapido que el modelo teorico.</li>
+                <li>Muchas retransmisiones o downlinks no planificados.</li>
+                <li>Nodos con un unico gateway visible en puntos criticos.</li>
+                <li>Datos validos sintacticamente pero imposibles fisicamente.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Pruebas que evitan sustos</h3>
+              <ul>
+                <li>Piloto con medidas de consumo y cobertura reales.</li>
+                <li>Prueba de caida de gateway, backhaul y backend.</li>
+                <li>Payloads limite contra el decoder antes de produccion.</li>
+                <li>Ensayo de sustitucion y baja segura de un nodo.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Salida profesional</h3>
+              <ul>
+                <li>Matriz de riesgos con impacto en dato, energia y servicio.</li>
+                <li>Plan de remediacion priorizado por criticidad territorial.</li>
+                <li>Evidencias de cierre: configuracion, logs y nueva prueba.</li>
+                <li>Leccion aprendida incorporada al estandar de despliegue.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section accent-top" id="mapa" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Mapa del curso</div>
+              <h2 class="section-title">Resumen visual de modulos</h2>
+              <p class="section-subtitle">Itinerario recomendado para estudiar el curso y conectar teoria con practica.</p>
+            </div>
+          </div>
+
+          <div class="module-grid">
+            <article class="module-card">
+              <div class="module-pill">Modulo 1</div>
+              <h3>Sensorica territorial</h3>
+              <p>Variables, dominios de medida, patrones de dato y condicionantes de campo.</p>
+            </article>
+            <article class="module-card">
+              <div class="module-pill">Modulo 2</div>
+              <h3>Conectividad LPWAN</h3>
+              <p>LoRaWAN, NB-IoT, LTE-M y comparacion con redes locales o cableadas.</p>
+            </article>
+            <article class="module-card">
+              <div class="module-pill">Modulo 3</div>
+              <h3>Hardware y calibracion</h3>
+              <p>Instalacion, alimentacion, mantenimiento, deriva y ciclo de vida.</p>
+            </article>
+            <article class="module-card">
+              <div class="module-pill">Modulo 4</div>
+              <h3>Arquitecturas de recoleccion</h3>
+              <p>Gateways, servidores de red, payload formatters, integraciones y backend.</p>
+            </article>
+            <article class="module-card">
+              <div class="module-pill">Modulo 5</div>
+              <h3>Gemelo digital y energia</h3>
+              <p>MTBF, presupuesto energetico, supervivencia fisica y fidelidad del modelo territorial.</p>
+            </article>
+            <article class="module-card">
+              <div class="module-pill">Modulo 6</div>
+              <h3>Seguridad y energia</h3>
+              <p>Proteccion fisica, autonomia, fiabilidad del dato y operacion sostenible.</p>
+            </article>
+            <article class="module-card">
+              <div class="module-pill">Modulo 7</div>
+              <h3>Pentesting IoT</h3>
+              <p>Auditoria autorizada, red side, blue side, hardening y evidencias de cierre.</p>
+            </article>
+            <article class="module-card">
+              <div class="module-pill">Modulo 8</div>
+              <h3>Arquitectura segura</h3>
+              <p>Referencia end-to-end con planos de datos, gestion, seguridad y observabilidad.</p>
+            </article>
+            <article class="module-card">
+              <div class="module-pill">Modulo 9</div>
+              <h3>Errores de diseno</h3>
+              <p>Anti-patterns de campo: JSON excesivo, ACK abusivo, gateway unico, claves y decoders.</p>
+            </article>
+            <article class="module-card">
+              <div class="module-pill">Modulo 10</div>
+              <h3>Practicas aplicadas</h3>
+              <p>Casos de arquitectura y practica TTN del payload hexadecimal al JSON.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="casos" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Practica</div>
+              <h2 class="section-title">Casos de decision de infraestructura IoT</h2>
+              <p class="section-subtitle">Cada caso pide responder sin asumir solucion cerrada: variables, sensores, comunicacion, infraestructura, energia, riesgos, descartes y salida esperada.</p>
+            </div>
+          </div>
+
+          <div class="case-stack">
+            <article class="case-card">
+              <img src="assets/caso-1.png" alt="Territorio rural con parcelas, cauces, aparcamientos y sensorica ambiental" />
+              <div>
+                <div class="detail-num">Caso 1</div>
+                <h3>Territorio rural con sensorica distribuida</h3>
+                <p>Parcelas agricolas, pequenos cauces, aparcamientos disuasorios y zonas abiertas. Puntos repartidos desde cientos de metros hasta varios kilometros, muchos sin red electrica y con datos pequenos y periodicos.</p>
+                <ul>
+                  <li><strong>Solucion razonable:</strong> LoRaWAN con uno o varios gateways bien ubicados, nodos de bajo consumo y salida JSON decodificada.</li>
+                  <li><strong>Complementos:</strong> solar en puntos exigentes, backhaul 4G/fibra para gateways y reglas de validacion.</li>
+                  <li><strong>Descartes tipicos:</strong> WiFi por alcance y NB-IoT masivo si el coste SIM/operador no compensa.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="case-card">
+              <img src="assets/caso-2.png" alt="Puntos remotos dispersos en orografia compleja" />
+              <div>
+                <div class="detail-num">Caso 2</div>
+                <h3>Puntos remotos en orografia compleja</h3>
+                <p>Pocos activos muy separados en Galicia: depositos de agua, bombeos, sensores de nivel, casetas tecnicas o puntos aislados. La cobertura varia y el mantenimiento presencial es caro.</p>
+                <ul>
+                  <li><strong>Solucion razonable:</strong> NB-IoT o LTE-M por activo si hay cobertura real; LoRaWAN solo si se justifica gateway cercano o red propia.</li>
+                  <li><strong>Complementos:</strong> encuesta de cobertura, antena externa, bateria sobredimensionada y alertas de bateria/senal.</li>
+                  <li><strong>Descartes tipicos:</strong> red LoRaWAN extensa para pocos puntos si obliga a operar demasiados gateways.</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="case-card">
+              <img src="assets/caso-3.png" alt="Edificios municipales con sensores interiores" />
+              <div>
+                <div class="detail-num">Caso 3</div>
+                <h3>Edificios municipales en interior</h3>
+                <p>Ayuntamiento, biblioteca, polideportivo, centro cultural, escuela infantil o archivo. Variables como temperatura, humedad, CO2, ocupacion, accesos, contadores, consumo, climatizacion e iluminacion.</p>
+                <ul>
+                  <li><strong>Solucion razonable:</strong> arquitectura hibrida con red local, Ethernet/WiFi donde exista, RS-485/Modbus para contadores y LoRaWAN indoor si simplifica nodos dispersos.</li>
+                  <li><strong>Complementos:</strong> segmentacion de red, gateway local, normalizacion de datos y mantenimiento sencillo.</li>
+                  <li><strong>Descartes tipicos:</strong> NB-IoT por dispositivo si hay red municipal estable y muchos sensores interiores.</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="spec-rio" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Spec 01</div>
+              <h2 class="section-title">Nivel de rio · Cuenca del Mino</h2>
+              <p class="section-subtitle">Ejemplo de especificacion territorial para un punto critico de agua. La prioridad no es solo medir: es sobrevivir en campo, diagnosticar fallos y garantizar alertas en episodios extremos.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Dato critico</span>
+              <span class="chip">Clase A</span>
+              <span class="chip">4-20 mA</span>
+            </div>
+          </div>
+
+          <div class="spec-hero">
+            <div class="spec-visual" aria-hidden="true">
+              <svg viewBox="0 0 520 320" role="img">
+                <defs>
+                  <linearGradient id="riverGrad" x1="0" x2="1" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#dcebe4" />
+                    <stop offset="100%" stop-color="#f8f4ea" />
+                  </linearGradient>
+                </defs>
+                <rect x="0" y="0" width="520" height="320" fill="url(#riverGrad)" />
+                <path d="M0 238 C90 198 128 272 220 228 C312 184 370 244 520 202 L520 320 L0 320 Z" fill="#9ec5d2" opacity=".78" />
+                <path d="M0 260 C100 222 132 292 232 252 C326 214 378 264 520 226" fill="none" stroke="#2a6f9b" stroke-width="5" opacity=".65" />
+                <rect x="350" y="38" width="28" height="232" rx="8" fill="#53635c" />
+                <rect x="236" y="98" width="150" height="92" rx="12" fill="#d8ded7" stroke="#394640" stroke-width="4" />
+                <circle cx="256" cy="118" r="6" fill="#394640" />
+                <circle cx="366" cy="118" r="6" fill="#394640" />
+                <circle cx="256" cy="170" r="6" fill="#394640" />
+                <circle cx="366" cy="170" r="6" fill="#394640" />
+                <path d="M290 190 C290 226 315 226 315 258" fill="none" stroke="#172016" stroke-width="8" stroke-linecap="round" />
+                <path d="M338 190 C338 218 362 218 362 246" fill="none" stroke="#172016" stroke-width="8" stroke-linecap="round" />
+                <line x1="340" y1="98" x2="340" y2="48" stroke="#172016" stroke-width="6" stroke-linecap="round" />
+                <path d="M330 58 Q340 46 350 58" fill="none" stroke="#237b61" stroke-width="4" />
+                <path d="M320 70 Q340 42 360 70" fill="none" stroke="#237b61" stroke-width="3" opacity=".75" />
+                <g stroke="#237b61" stroke-width="2" opacity=".28">
+                  <path d="M30 40 H180 V100" />
+                  <path d="M70 80 H210 V132" />
+                  <path d="M420 50 H490 V130" />
+                  <path d="M410 90 H468 V164" />
+                </g>
+              </svg>
+            </div>
+
+            <div class="spec-list">
+              <article>
+                <h3>Prioridad</h3>
+                <p>Supervivencia operativa extrema, diagnostico de fallos y dato critico para alerta hidrologica.</p>
+              </article>
+              <article>
+                <h3>Sensor</h3>
+                <p>Sonda industrial de radar 80 GHz, robusta frente a viento, lluvia y variaciones de temperatura.</p>
+              </article>
+              <article>
+                <h3>Interfaz</h3>
+                <p>4-20 mA por su robustez en cable largo hasta el nodo y facilidad de diagnostico electrico.</p>
+              </article>
+              <article>
+                <h3>Energia</h3>
+                <p>Bateria de gran formato con panel solar sobredimensionado y margen para invierno y episodios prolongados.</p>
+              </article>
+              <article>
+                <h3>Conectividad</h3>
+                <p>LoRaWAN privado Clase A para soberania de red y alerta sin depender de antenas de operadoras en eventos criticos.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Payload minimo</h3>
+              <p>Nivel, bateria, estado solar, calidad radio, alarma de umbral, timestamp y codigo de diagnostico del sensor.</p>
+            </article>
+            <article class="card">
+              <h3>Riesgos a controlar</h3>
+              <p>Crecidas, humedad, vandalismo, deriva, obstruccion fisica, fallo de panel solar, perdida de gateway y falta de visitas preventivas.</p>
+            </article>
+            <article class="card">
+              <h3>Decision tecnica</h3>
+              <p>Priorizar autonomia, encapsulado, diagnostico y red propia. En puntos criticos, el coste de infraestructura se justifica por continuidad de alerta.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="specs-territoriales" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Specs 02-03</div>
+              <h2 class="section-title">Smart parking urbano y vinedo Rias Baixas</h2>
+              <p class="section-subtitle">Dos especificaciones de contraste: una optimiza coste unitario y eventos discretos en ciudad; la otra prioriza dato agronomico y cobertura sobre grandes extensiones.</p>
+            </div>
+          </div>
+
+          <div class="spec-card-grid">
+            <article class="spec-card">
+              <div class="spec-card-head">
+                <span class="detail-num">Spec 02</span>
+                <h3>Smart parking urbano</h3>
+              </div>
+              <div class="spec-mini-visual parking" aria-hidden="true">
+                <svg viewBox="0 0 420 180" role="img">
+                  <rect x="0" y="0" width="420" height="180" rx="16" fill="#f8f4ea" />
+                  <g stroke="#c9d3c8" stroke-width="3">
+                    <line x1="36" y1="30" x2="384" y2="30" />
+                    <line x1="36" y1="90" x2="384" y2="90" />
+                    <line x1="36" y1="150" x2="384" y2="150" />
+                    <line x1="90" y1="30" x2="90" y2="150" />
+                    <line x1="160" y1="30" x2="160" y2="150" />
+                    <line x1="230" y1="30" x2="230" y2="150" />
+                    <line x1="300" y1="30" x2="300" y2="150" />
+                  </g>
+                  <rect x="102" y="48" width="48" height="26" rx="8" fill="#2a6f9b" />
+                  <circle cx="112" cy="78" r="5" fill="#172016" />
+                  <circle cx="140" cy="78" r="5" fill="#172016" />
+                  <rect x="242" y="108" width="48" height="26" rx="8" fill="#237b61" />
+                  <circle cx="252" cy="138" r="5" fill="#172016" />
+                  <circle cx="280" cy="138" r="5" fill="#172016" />
+                  <circle cx="90" cy="90" r="9" fill="#d9822b" />
+                  <circle cx="300" cy="90" r="9" fill="#d9822b" />
+                </svg>
+              </div>
+              <ul class="spec-points">
+                <li><strong>Prioridad:</strong> coste unitario minimo y escalabilidad a miles de plazas.</li>
+                <li><strong>Sensor:</strong> magnetometro embebido o radar miniaturizado.</li>
+                <li><strong>Estrategia de envio:</strong> reporte por evento; el nodo duerme y transmite solo si cambia el estado ocupado/libre, con keepalive diario.</li>
+                <li><strong>Conectividad:</strong> LoRaWAN o NB-IoT segun cobertura urbana, densidad de nodos y coste operativo.</li>
+              </ul>
+              <div class="note compact">
+                <strong>Clave:</strong> evitar telemetria continua. El dato relevante es el cambio de estado y la salud minima del nodo.
+              </div>
+            </article>
+
+            <article class="spec-card">
+              <div class="spec-card-head">
+                <span class="detail-num">Spec 03</span>
+                <h3>Vinedo Rias Baixas</h3>
+              </div>
+              <div class="spec-mini-visual vineyard" aria-hidden="true">
+                <svg viewBox="0 0 420 180" role="img">
+                  <rect x="0" y="0" width="420" height="180" rx="16" fill="#f8f4ea" />
+                  <g stroke="#9fb89f" stroke-width="4">
+                    <line x1="46" y1="38" x2="374" y2="38" />
+                    <line x1="46" y1="74" x2="374" y2="74" />
+                    <line x1="46" y1="110" x2="374" y2="110" />
+                    <line x1="46" y1="146" x2="374" y2="146" />
+                  </g>
+                  <g fill="#237b61">
+                    <circle cx="80" cy="38" r="8" /><circle cx="132" cy="38" r="8" /><circle cx="184" cy="38" r="8" /><circle cx="236" cy="38" r="8" /><circle cx="288" cy="38" r="8" />
+                    <circle cx="106" cy="74" r="8" /><circle cx="158" cy="74" r="8" /><circle cx="210" cy="74" r="8" /><circle cx="262" cy="74" r="8" /><circle cx="314" cy="74" r="8" />
+                    <circle cx="80" cy="110" r="8" /><circle cx="132" cy="110" r="8" /><circle cx="184" cy="110" r="8" /><circle cx="236" cy="110" r="8" /><circle cx="288" cy="110" r="8" />
+                    <circle cx="106" cy="146" r="8" /><circle cx="158" cy="146" r="8" /><circle cx="210" cy="146" r="8" /><circle cx="262" cy="146" r="8" /><circle cx="314" cy="146" r="8" />
+                  </g>
+                  <rect x="330" y="72" width="30" height="52" rx="8" fill="#2a6f9b" />
+                  <path d="M320 78 Q345 50 370 78" fill="none" stroke="#2a6f9b" stroke-width="4" />
+                  <path d="M310 90 Q345 40 380 90" fill="none" stroke="#2a6f9b" stroke-width="3" opacity=".65" />
+                </svg>
+              </div>
+              <ul class="spec-points">
+                <li><strong>Prioridad:</strong> dato agronomico fiable en extensiones geograficas amplias.</li>
+                <li><strong>Sensor:</strong> humedad de suelo, humedad de hoja y radiacion.</li>
+                <li><strong>Interfaz:</strong> bus SDI-12 para conectar multiples sensores al mismo nodo con un solo cable y reposo muy bajo.</li>
+                <li><strong>Conectividad:</strong> LoRaWAN con gateway propio en cota alta para iluminar la finca.</li>
+              </ul>
+              <div class="note compact">
+                <strong>Clave:</strong> un nodo puede agrupar varias medidas, reduciendo coste por punto agronomico y visitas de mantenimiento.
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="ttn" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Practica TTN</div>
+              <h2 class="section-title">De la radiofrecuencia al JSON</h2>
+              <p class="section-subtitle">La practica simula un dispositivo LoRaWAN en The Things Network / The Things Stack para entender que el sensor transmite bytes y el servidor aplica un decoder.</p>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <article class="card">
+              <h3>Datos iniciales</h3>
+              <ul>
+                <li><strong>Application ID:</strong> xdg-practica-lorawan-json</li>
+                <li><strong>Application name:</strong> XDG Practica LoRaWAN JSON</li>
+                <li><strong>Frequency plan:</strong> Europe 863-870 MHz</li>
+                <li><strong>LoRaWAN:</strong> Specification 1.0.3</li>
+                <li><strong>Activation:</strong> OTAA</li>
+                <li><strong>End device:</strong> dragino-lht65-demo-001</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Payload de prueba</h3>
+              <ul>
+                <li><strong>Hex:</strong> <code>0CB2066102510105E10000</code></li>
+                <li><strong>FPort:</strong> <code>2</code></li>
+                <li><strong>Base64:</strong> <code>DLIGYQJRAQXhAAA=</code></li>
+                <li><strong>Modelo:</strong> Dragino LHT65/LHT65N simulado</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="code-panel mt-18">
+            <div class="code-head">Decoder JavaScript para Payload formatters → Uplink</div>
+            <pre><code>function readInt16BE(bytes, index) {
+  var value = (bytes[index] &lt;&lt; 8) | bytes[index + 1];
+  if (value &amp; 0x8000) value = value - 0x10000;
+  return value;
+}
+
+function round(value, decimals) {
+  var factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+}
+
+function decodeUplink(input) {
+  var bytes = input.bytes;
+  var warnings = [];
+  var errors = [];
+
+  if (input.fPort !== 2) {
+    warnings.push("Este decoder esta preparado para FPort 2, tipico del LHT65/LHT65N.");
+  }
+
+  if (bytes.length &lt; 9) {
+    errors.push("Payload demasiado corto. Se esperaban al menos 9 bytes.");
+    return { data: {}, warnings: warnings, errors: errors };
+  }
+
+  var rawBattery = (bytes[0] &lt;&lt; 8) | bytes[1];
+  var batteryMv = rawBattery &amp; 0x3FFF;
+  var internalTempRaw = readInt16BE(bytes, 2);
+  var humidityRaw = (bytes[4] &lt;&lt; 8) | bytes[5];
+  var externalSensorCode = bytes[6] &amp; 0x7F;
+  var externalSensorTypes = {
+    0: "none",
+    1: "temperature_ds18b20",
+    4: "interrupt",
+    5: "illumination",
+    6: "adc",
+    7: "interrupt_count"
+  };
+
+  var data = {
+    device_model: "Dragino LHT65/LHT65N simulated",
+    f_port: input.fPort,
+    payload_size_bytes: bytes.length,
+    battery_v: round(batteryMv / 1000, 3),
+    temperature_sht_c: round(internalTempRaw / 100, 2),
+    humidity_sht_pct: round(humidityRaw / 10, 1),
+    external_sensor_code: externalSensorCode,
+    external_sensor_type: externalSensorTypes[externalSensorCode] || "unknown"
+  };
+
+  if (externalSensorCode === 1 &amp;&amp; bytes.length &gt;= 9) {
+    var externalTempRaw = readInt16BE(bytes, 7);
+    data.external_temperature_c = round(externalTempRaw / 100, 2);
+  }
+
+  if (data.humidity_sht_pct &lt; 0 || data.humidity_sht_pct &gt; 100) {
+    warnings.push("Humedad fuera de rango fisico. Revisar payload o formula de decodificacion.");
+  }
+
+  return { data: data, warnings: warnings, errors: errors };
+}</code></pre>
+          </div>
+
+          <div class="grid-2 mt-18">
+            <article class="card">
+              <h3>Resultado esperado</h3>
+              <pre class="json"><code>{
+  "battery_v": 3.25,
+  "temperature_sht_c": 16.33,
+  "humidity_sht_pct": 59.3,
+  "external_sensor_type": "temperature_ds18b20",
+  "external_temperature_c": 15.05
+}</code></pre>
+            </article>
+            <article class="card">
+              <h3>Tabla de decodificacion</h3>
+              <ul>
+                <li>0-1: bateria, <code>0x0CB2 = 3250 mV</code>.</li>
+                <li>2-3: temperatura interna, <code>0x0661 / 100 = 16.33 C</code>.</li>
+                <li>4-5: humedad, <code>0x0251 / 10 = 59.3 %</code>.</li>
+                <li>6: tipo externo, <code>0x01 = temperature_ds18b20</code>.</li>
+                <li>7-8: temperatura externa, <code>0x05E1 / 100 = 15.05 C</code>.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="serializacion" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Payload y serializacion</div>
+              <h2 class="section-title">La falacia del texto en redes LPWAN</h2>
+              <p class="section-subtitle">JSON parece natural porque es legible y comodo para APIs, pero en la parte radio de una red LPWAN cada byte adicional prolonga el time-on-air, drena bateria y ocupa canal. La semantica completa debe reconstruirse despues, no viajar siempre desde el nodo.</p>
+            </div>
+          </div>
+
+          <div class="payload-hero">
+            <img src="assets/falacia-texto-lpwan.png" alt="Comparativa visual entre JSON ASCII voluminoso y binario nativo compacto en redes LPWAN" />
+            <div class="payload-hero-copy">
+              <article class="card">
+                <h3>La trampa</h3>
+                <p>Confundir legibilidad humana con eficiencia de radio. Enviar nombres de campos, llaves, comillas y separadores desde un nodo a bateria puede desperdiciar mas energia que la propia medida.</p>
+              </article>
+              <article class="card">
+                <h3>La solucion</h3>
+                <p>Transmitir valores compactos, mantener una tabla de bytes y aplicar un decoder en TTN, ChirpStack, LwM2M server o backend de recoleccion.</p>
+              </article>
+            </div>
+          </div>
+
+          <div class="serialization-compare">
+            <article class="serialization-card json-side">
+              <div class="serialization-head">
+                <span class="serialization-label">Texto estructurado</span>
+                <strong>JSON en el dispositivo</strong>
+              </div>
+              <pre><code>{
+  "temperature": 24.5
+}</code></pre>
+              <ul>
+                <li>Legible para humanos, pero muy verboso.</li>
+                <li>Puede superar facilmente decenas de bytes para una sola medida.</li>
+                <li>Prolonga el time-on-air, congestiona el canal y drena bateria.</li>
+                <li>En LPWAN extremo suele ser una mala practica.</li>
+              </ul>
+            </article>
+
+            <div class="serialization-arrow" aria-hidden="true">→</div>
+
+            <article class="serialization-card binary-side">
+              <div class="serialization-head">
+                <span class="serialization-label">Serializacion binaria</span>
+                <strong>Payload compacto + decoder</strong>
+              </div>
+              <pre><code>0CB206610B010205E1</code></pre>
+              <ul>
+                <li>Apenas unos bytes para codificar bateria, temperatura, humedad o sensor externo.</li>
+                <li>El decoder en TTN/ChirpStack reconstruye nombres, unidades y significado.</li>
+                <li>Reduce radio, consumo y ocupacion de espectro.</li>
+                <li>El procesado en la nube es barato; transmitir por radio es lo costoso.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Regla practica</h3>
+              <p>No enviar nombres de campos desde el sensor si el servidor ya conoce el modelo de payload. Enviar valores compactos y versionar el decoder.</p>
+            </article>
+            <article class="card">
+              <h3>Formatos utiles</h3>
+              <p>Binario propio para maxima eficiencia, Cayenne LPP para telemetria sencilla estructurada, e IPSO/LwM2M Objects cuando interesa normalizar recursos y gestion de flota.</p>
+            </article>
+            <article class="card">
+              <h3>Riesgo</h3>
+              <p>Un payload binario sin documentacion ni decoder fiable se vuelve opaco. Hay que mantener tabla de bytes, unidades, escalas y rangos validos.</p>
+            </article>
+            <article class="card">
+              <h3>Salida final</h3>
+              <p>La plataforma no debe recibir bytes crudos como dato final, sino JSON tecnico decodificado, validado y preparado para historico, alertas o analitica.</p>
+            </article>
+          </div>
+
+          <div class="bitpacking-panel mt-18">
+            <div class="section-head compact-head">
+              <div>
+                <div class="eyebrow">Ingenieria de payload</div>
+                <h3 class="subsection-title">Serializacion binaria y bit-packing</h3>
+                <p class="section-subtitle">Un payload compacto no es una cadena misteriosa: es un contrato de bytes. Cada posicion debe tener significado, escala, unidad, endianess, rango valido y version de decoder.</p>
+              </div>
+            </div>
+
+            <div class="payload-parts">
+              <article>
+                <span>1 byte</span>
+                <h4>Canal</h4>
+                <p>Identifica el sensor fisico o la fuente logica: temperatura, humedad, bateria, nivel, evento o diagnostico.</p>
+              </article>
+              <article>
+                <span>1 byte</span>
+                <h4>Tipo</h4>
+                <p>Define el objeto de dato y su escala. En Cayenne LPP, por ejemplo, el tipo indica como interpretar los bytes siguientes.</p>
+              </article>
+              <article>
+                <span>N bytes</span>
+                <h4>Valor escalado</h4>
+                <p>Guarda el dato crudo en entero, normalmente multiplicado por un factor para evitar floats y reducir tamano.</p>
+              </article>
+            </div>
+
+            <div class="scale-matrix mt-18">
+              <h4>Matriz de factores de escala Cayenne LPP</h4>
+              <div class="protocol-table-wrap">
+                <table class="protocol-table compact-table">
+                  <thead>
+                    <tr>
+                      <th>Tipo de dato</th>
+                      <th>ID hex</th>
+                      <th>Tamano</th>
+                      <th>Factor de escala</th>
+                      <th>Rango fisico</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>Analog input</th>
+                      <td><code>0x02</code></td>
+                      <td>2 bytes</td>
+                      <td>valor / 100</td>
+                      <td>+-327.67</td>
+                    </tr>
+                    <tr>
+                      <th>Temperature</th>
+                      <td><code>0x67</code></td>
+                      <td>2 bytes</td>
+                      <td>valor / 10</td>
+                      <td>+-3276.7 C</td>
+                    </tr>
+                    <tr>
+                      <th>Humidity</th>
+                      <td><code>0x68</code></td>
+                      <td>1 byte</td>
+                      <td>valor * 0.5</td>
+                      <td>0 % a 100 %</td>
+                    </tr>
+                    <tr>
+                      <th>Barometer</th>
+                      <td><code>0x73</code></td>
+                      <td>2 bytes</td>
+                      <td>valor / 10</td>
+                      <td>0 a 6553.5 hPa</td>
+                    </tr>
+                    <tr>
+                      <th>GPS location</th>
+                      <td><code>0x88</code></td>
+                      <td>9 bytes</td>
+                      <td>lat/lon / 10000, alt / 100</td>
+                      <td>Coordenadas 3D</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="matrix-caption">El receptor aplica matematicamente el factor de escala al entero recibido para recuperar la magnitud fisica. La precision del dato no depende de enviar texto, sino de elegir bien escala, tamano y rango.</p>
+            </div>
+
+            <div class="code-panel mt-18">
+              <div class="code-head">Ejemplo conceptual: temperatura 24.5 C compactada</div>
+              <pre><code>Canal        Tipo Cayenne LPP       Valor escalado
+0x01         0x67 temperatura       0x00F5 = 245 / 10 = 24.5 C
+
+Payload final:
+01 67 00 F5</code></pre>
+            </div>
+
+            <div class="grid-3 mt-18">
+              <article class="card">
+                <h3>Que documentar</h3>
+                <ul>
+                  <li>Mapa de bytes y version de payload.</li>
+                  <li>Unidad, escala, signo y endianess.</li>
+                  <li>Rango fisico valido y valores reservados.</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Que compactar</h3>
+                <ul>
+                  <li>Flags booleanos en bits de estado.</li>
+                  <li>Enteros escalados en vez de floats.</li>
+                  <li>Codigos enumerados en vez de texto.</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Que no hacer</h3>
+                <ul>
+                  <li>Cambiar el orden de bytes sin versionar.</li>
+                  <li>Enviar campos nulos o nombres repetidos.</li>
+                  <li>Decodificar sin validar rangos y longitud.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel section" id="tacticas-transmision" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Firmware y radio</div>
+              <h2 class="section-title">Tacticas de transmision: el silencio como estrategia</h2>
+              <p class="section-subtitle">La inteligencia en firmware evita saturar el canal compartiendo unicamente lo estrictamente necesario. En LPWAN, callar tambien es una decision tecnica: ahorra bateria, reduce colisiones y deja aire libre para eventos importantes.</p>
+            </div>
+            <div class="chips">
+              <span class="chip">Threshold</span>
+              <span class="chip">Evento</span>
+              <span class="chip">ACK critico</span>
+            </div>
+          </div>
+
+          <div class="transmission-modes">
+            <article class="mode-row inefficient">
+              <div>
+                <h3>Reporte periodico fijo</h3>
+                <p>Envio sistematico aunque el entorno este estable. Es sencillo de programar, pero puede desperdiciar energia y ocupar canal sin aportar nueva informacion.</p>
+              </div>
+              <div class="signal-strip" aria-hidden="true">
+                <svg class="transmission-chart periodic-chart" viewBox="0 0 720 150" role="img">
+                  <g class="chart-grid">
+                    <path d="M40 24H690 M40 48H690 M40 72H690 M40 96H690 M40 120H690" />
+                    <path d="M80 18V130 M140 18V130 M200 18V130 M260 18V130 M320 18V130 M380 18V130 M440 18V130 M500 18V130 M560 18V130 M620 18V130 M680 18V130" />
+                  </g>
+                  <line class="chart-axis" x1="44" y1="112" x2="692" y2="112" />
+                  <g class="tx-bars dark">
+                    <path d="M95 112V30" /><path d="M215 112V30" /><path d="M335 112V30" /><path d="M455 112V30" /><path d="M575 112V30" /><path d="M665 112V30" />
+                  </g>
+                  <g class="tx-labels">
+                    <text x="95" y="24">TX</text><text x="215" y="24">TX</text><text x="335" y="24">TX</text><text x="455" y="24">TX</text><text x="575" y="24">TX</text><text x="665" y="24">TX</text>
+                  </g>
+                  <text class="chart-caption" x="44" y="140">Envio fijo: muchas transmisiones aunque el valor no cambie.</text>
+                </svg>
+              </div>
+            </article>
+
+            <article class="mode-row efficient">
+              <div>
+                <h3>Reporte por umbral</h3>
+                <p>La radio despierta solo cuando el delta fisico supera un limite. Es adecuado para variables que cambian lentamente y admiten pequenas variaciones sin interes operativo.</p>
+              </div>
+              <div class="signal-strip" aria-hidden="true">
+                <svg class="transmission-chart threshold-chart" viewBox="0 0 720 150" role="img">
+                  <g class="chart-grid blue">
+                    <path d="M40 24H690 M40 48H690 M40 72H690 M40 96H690 M40 120H690" />
+                    <path d="M80 18V130 M140 18V130 M200 18V130 M260 18V130 M320 18V130 M380 18V130 M440 18V130 M500 18V130 M560 18V130 M620 18V130 M680 18V130" />
+                  </g>
+                  <line class="chart-axis" x1="44" y1="112" x2="692" y2="112" />
+                  <line class="threshold-line" x1="44" y1="64" x2="692" y2="64" />
+                  <polyline class="sensor-wave" points="44,106 76,92 112,83 154,80 194,88 232,78 270,96 312,84 350,58 390,76 430,70 472,92 512,86 552,62 592,82 632,74 670,94 692,86" />
+                  <g class="tx-bars blue-bars">
+                    <path d="M350 112V42" /><path d="M552 112V42" />
+                  </g>
+                  <g class="tx-labels blue-text">
+                    <text x="350" y="36">TX</text><text x="552" y="36">TX</text>
+                  </g>
+                  <text class="chart-caption" x="44" y="140">Solo transmite cuando se supera el umbral operativo.</text>
+                </svg>
+              </div>
+            </article>
+
+            <article class="mode-row critical">
+              <div>
+                <h3>Reporte por evento critico</h3>
+                <p>Una interrupcion asincrona despierta el nodo al instante. Se reserva para alarmas reales y puede activar confirmacion o reintentos, asumiendo el coste energetico porque la criticidad lo justifica.</p>
+              </div>
+              <div class="signal-strip" aria-hidden="true">
+                <svg class="transmission-chart event-chart" viewBox="0 0 720 150" role="img">
+                  <g class="chart-grid orange">
+                    <path d="M40 24H690 M40 48H690 M40 72H690 M40 96H690 M40 120H690" />
+                    <path d="M80 18V130 M140 18V130 M200 18V130 M260 18V130 M320 18V130 M380 18V130 M440 18V130 M500 18V130 M560 18V130 M620 18V130 M680 18V130" />
+                  </g>
+                  <line class="chart-axis" x1="44" y1="112" x2="692" y2="112" />
+                  <polyline class="event-step" points="44,112 318,112 326,48 380,48 388,112 692,112" />
+                  <g class="event-burst">
+                    <path d="M330 112V28" /><path d="M338 112V28" /><path d="M346 112V28" /><path d="M354 112V28" /><path d="M362 112V28" />
+                  </g>
+                  <g class="ack-bars">
+                    <path d="M450 112V76" /><path d="M570 112V76" />
+                  </g>
+                  <text class="event-label" x="296" y="22">CRITICAL EVENT TX</text>
+                  <text class="event-label small" x="438" y="70">RX/ACK</text>
+                  <text class="event-label small" x="558" y="70">RX/ACK</text>
+                  <text class="chart-caption" x="44" y="140">Evento critico: despertar inmediato y confirmaciones selectivas.</text>
+                </svg>
+              </div>
+            </article>
+          </div>
+
+          <div class="grid-3 mt-18">
+            <article class="card">
+              <h3>Politica de envio</h3>
+              <ul>
+                <li>Keepalive espaciado para saber que el nodo vive.</li>
+                <li>Envio por umbral para cambios fisicos relevantes.</li>
+                <li>Evento inmediato para alarmas de seguridad o servicio.</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>Confirmaciones</h3>
+              <p>Usar ACK y reintentos solo en eventos criticos. Confirmar toda la telemetria periodica reduce autonomia y puede aumentar congestion.</p>
+            </article>
+            <article class="card">
+              <h3>Firmware inteligente</h3>
+              <p>Filtrar ruido, aplicar histeresis, agrupar medidas y adaptar frecuencia segun bateria, calidad de enlace y estado operativo.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel section" id="decision" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Decision tecnica</div>
+              <h2 class="section-title">Como justificar una arquitectura IoT</h2>
+              <p class="section-subtitle">La respuesta buena no es nombrar una tecnologia: es explicar por que encaja y que coste operativo deja en campo.</p>
+            </div>
+          </div>
+
+          <div class="decision-grid">
+            <article class="card">
+              <h3>1. Variables y sensores</h3>
+              <p>Define que se mide, rango, precision, frecuencia, unidad, ubicacion y criticidad.</p>
+            </article>
+            <article class="card">
+              <h3>2. Comunicacion</h3>
+              <p>Justifica red principal y complementos con distancia, cobertura, volumen de datos y latencia.</p>
+            </article>
+            <article class="card">
+              <h3>3. Infraestructura</h3>
+              <p>Incluye gateway, operador, router, servidor de red, backend, integracion y monitorizacion.</p>
+            </article>
+            <article class="card">
+              <h3>4. Energia</h3>
+              <p>Explica bateria, red electrica, solar, periodicidad y plan de sustitucion o mantenimiento.</p>
+            </article>
+            <article class="card">
+              <h3>5. Riesgos</h3>
+              <p>Cobertura, vandalismo, deriva, humedad, perdida de paquetes, obsolescencia y dependencia de proveedor.</p>
+            </article>
+            <article class="card">
+              <h3>6. Salida esperada</h3>
+              <p>Payload decodificado, JSON tecnico, metadatos de red, validaciones y trazabilidad basica.</p>
+            </article>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Cierre:</strong> medir no basta. Una solucion territorial robusta debe sostener el dato durante todo el recorrido: campo, comunicacion, decodificacion, validacion, almacenamiento e integracion.
+          </div>
+        </section>
+
+        <section class="panel section" id="matriz-conectividad" data-section>
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Matriz de conectividad</div>
+              <h2 class="section-title">Master Connectivity Matrix</h2>
+              <p class="section-subtitle">Una forma rapida de comparar tecnologias es mirar cuatro dimensiones: rango/cobertura, ancho de banda, autonomia de bateria y soberania de infraestructura.</p>
+            </div>
+          </div>
+
+          <div class="matrix-wrap">
+            <table class="connectivity-matrix">
+              <thead>
+                <tr>
+                  <th>Criterio</th>
+                  <th>WiFi<br><span>Edificios conectados</span></th>
+                  <th>Zigbee<br><span>Domotica mesh</span></th>
+                  <th>LoRaWAN<br><span>Redes territoriales propias</span></th>
+                  <th>NB-IoT<br><span>Puntos dispersos sin gateway propio</span></th>
+                  <th>Sigfox<br><span>Mensajes minimos</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Rango / cobertura</th>
+                  <td><span class="score empty"></span></td>
+                  <td><span class="score empty"></span></td>
+                  <td><span class="score full"></span></td>
+                  <td><span class="score full"></span></td>
+                  <td><span class="score full"></span></td>
+                </tr>
+                <tr>
+                  <th>Ancho de banda</th>
+                  <td><span class="score full"></span></td>
+                  <td><span class="score half"></span></td>
+                  <td><span class="score empty"></span></td>
+                  <td><span class="score half"></span></td>
+                  <td><span class="score empty"></span></td>
+                </tr>
+                <tr>
+                  <th>Autonomia bateria</th>
+                  <td><span class="score empty"></span></td>
+                  <td><span class="score half"></span></td>
+                  <td><span class="score full"></span></td>
+                  <td><span class="score half"></span></td>
+                  <td><span class="score full"></span></td>
+                </tr>
+                <tr>
+                  <th>Soberania de infraestructura</th>
+                  <td><span class="score full"></span></td>
+                  <td><span class="score full"></span></td>
+                  <td><span class="score full"></span></td>
+                  <td><span class="score empty"></span></td>
+                  <td><span class="score empty"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="legend">
+            <span><i class="score full"></i> Alto / favorable</span>
+            <span><i class="score half"></i> Medio / depende</span>
+            <span><i class="score empty"></i> Bajo / desfavorable</span>
+          </div>
+
+          <div class="note mt-18">
+            <strong>Lectura rapida:</strong> LoRaWAN destaca cuando se quiere cobertura territorial, bateria y control de red. NB-IoT resuelve puntos dispersos sin gateways, pero delega infraestructura. WiFi gana ancho de banda en edificios, no autonomia en campo. Zigbee encaja en malla interior. Sigfox representa mensajes minimos con poca soberania sobre la red.
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
